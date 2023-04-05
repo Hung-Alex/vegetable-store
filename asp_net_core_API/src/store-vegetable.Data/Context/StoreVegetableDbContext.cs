@@ -19,11 +19,17 @@ namespace store_vegetable.Data.Context
             
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Categories> Categories { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<User>().HasKey(x => x.Id);
+           
+            
 
         }
     }

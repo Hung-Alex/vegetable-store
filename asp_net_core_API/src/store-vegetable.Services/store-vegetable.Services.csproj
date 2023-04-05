@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\store-vegetable.Core\store-vegetable.Core.csproj" />
+    <ProjectReference Include="..\store-vegetable.Data\store-vegetable.Data.csproj" />
+  </ItemGroup>
+
 </Project>

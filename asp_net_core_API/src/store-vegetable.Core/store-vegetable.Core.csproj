@@ -4,7 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>store_vegetable.Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
 
 </Project>
