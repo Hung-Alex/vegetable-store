@@ -15,8 +15,8 @@ namespace store_vegetable.Data.Mappings
         {
             builder.ToTable("Cart");
             builder.HasKey(x => x.Id);
-           
 
+           
         }
     }
 }

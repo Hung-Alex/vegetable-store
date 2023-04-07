@@ -14,6 +14,8 @@ namespace store_vegetable.Core.Entites
         public string Name { get; set; } // tên người dùng
         public string Password { get; set; }// mật khẩu
         public string Role { get; set; } // vai trò của người dùng
+        public IList<Order> Orders { get; set; }
         
+        public Cart Cart { get; set; }
     }
 }

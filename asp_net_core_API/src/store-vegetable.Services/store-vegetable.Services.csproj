@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="7.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\store-vegetable.Core\store-vegetable.Core.csproj" />
     <ProjectReference Include="..\store-vegetable.Data\store-vegetable.Data.csproj" />
   </ItemGroup>

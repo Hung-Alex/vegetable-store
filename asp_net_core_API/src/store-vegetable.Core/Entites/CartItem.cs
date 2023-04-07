@@ -13,6 +13,7 @@ namespace store_vegetable.Core.Entites
         public Cart Cart { get; set; }
         public int FoodId { get; set; }// mã sản phẩm 
         public Food Food { get; set; }
+        public int Quantity { get; set; } // số lượng của sản phẩm 
 
     }
 }

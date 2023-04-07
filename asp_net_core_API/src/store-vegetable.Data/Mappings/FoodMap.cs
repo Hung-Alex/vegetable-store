@@ -25,7 +25,7 @@ namespace store_vegetable.Data.Mappings
             builder.Property(x => x.ShowOnPage).HasColumnType("bit").HasDefaultValue(false);
 
 
-
+            
 
 
 

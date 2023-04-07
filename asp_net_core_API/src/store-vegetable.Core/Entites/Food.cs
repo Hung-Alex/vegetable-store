@@ -22,6 +22,8 @@ namespace store_vegetable.Core.Entites
         public int CategoriesId { get; set; }// mã chủ đề 
         public Categories Categories { get; set; }
         public IList<CartItem> CartItems { get; set; }
+        public IList<OrderItem> Items { get; set; }
+
 
     }
 }

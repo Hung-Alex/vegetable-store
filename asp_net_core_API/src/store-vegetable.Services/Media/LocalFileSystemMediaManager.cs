@@ -67,3 +67,4 @@ namespace store_vegetable.Services.Media
             return string.Format(PictureFolder, Guid.NewGuid().ToString("N"), fileExt);
         }
     }
+}

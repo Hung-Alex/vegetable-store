@@ -20,6 +20,15 @@ namespace store_vegetable.Data.Mappings
             builder.Property(x=>x.Password).IsRequired().HasMaxLength(20);
             builder.Property(x=>x.Role).IsRequired().HasMaxLength(60).HasDefaultValue("user");
 
+            builder.HasMany(x=>x.Orders)
+                .WithOne(s=>s.User)
+                .HasForeignKey(x=>x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<Cart>(x => x.Cart)
+                 .WithOne(s => s.User)
+                 .HasForeignKey<Cart>(x => x.UserId);
+           
 
         }
     }

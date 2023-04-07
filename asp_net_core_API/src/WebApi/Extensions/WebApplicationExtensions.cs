@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using store_vegetable.Data.Context;
+using store_vegetable.Data.Seeders;
 using System.Runtime.CompilerServices;
-using WebApi.Middwares;
+
 
 namespace WebApi.Extensions
 {
@@ -12,15 +13,33 @@ namespace WebApi.Extensions
         {
             builder.Services.AddControllers();
             builder.Services.AddDbContext<StoreVegetableDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VegetableStoreDb")));
-            //add authencation
-            builder.Services.AddAuthentication()
-                            .AddScheme<TokenAuthenticationSchemeOptions, TokenAuthenticationSchemeHandler>("Tokens",
-                            opts => { }
-    );
+            builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+           
+        
+            
+     
 
 
 
             return builder;
+        }
+        public static IApplicationBuilder UseDataSeeder(this IApplicationBuilder app)
+        {
+            using var scope=app.ApplicationServices.CreateScope();
+            try
+            {
+                scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>()
+                    .Initialize();
+            }
+            catch (Exception ex)
+            {
+
+                scope.ServiceProvider
+                    .GetRequiredService<ILogger<Program>>()
+                    .LogError(ex, "could not insert data into database");
+            }
+            return app;
         }
         public static WebApplicationBuilder ConfigureCors(this WebApplicationBuilder builder)
         {

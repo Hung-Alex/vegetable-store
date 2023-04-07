@@ -4,12 +4,12 @@ using store_vegetable.Data.Context;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore.Design;
 
-using store_vegetable.Services.UserService;
-using store_vegetable.Services.JwtService;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi.Extensions;
+using store_vegetable.Data.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -18,9 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
         .ConfigureSwaggerOpenApi();
 }
 
+
 var app = builder.Build();
 {
     app.SetupRequestPieLines();
+    app.UseDataSeeder();
     app.Run();
 }
 
