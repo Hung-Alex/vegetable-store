@@ -19,7 +19,7 @@ namespace store_vegetable.Data.Mappings
             builder.Property(x => x.Phone).HasMaxLength(20).IsRequired();
             builder.Property(x => x.Status).HasColumnType("bit").HasDefaultValue(false);
             builder.Property(x => x.Total).IsRequired();
-            builder.Property(x => x.OrderDate).HasColumnType("datetime");
+            builder.Property(x => x.OrderDate).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
             
 
