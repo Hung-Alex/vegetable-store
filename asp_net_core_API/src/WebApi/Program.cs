@@ -10,12 +10,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApi.Extensions;
 using store_vegetable.Data.Seeders;
+using WebApi.Mapsters;
+using WebApi.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.ConfigureServices()
         .ConfigureCors()
-        .ConfigureSwaggerOpenApi();
+        .ConfigureSwaggerOpenApi()
+        .ConfigureMapster();
 }
 
 
@@ -23,6 +26,8 @@ var app = builder.Build();
 {
     app.SetupRequestPieLines();
     app.UseDataSeeder();
+    app.MapCategoryEnpoints();
+    
     app.Run();
 }
 

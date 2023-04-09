@@ -30,7 +30,49 @@ namespace store_vegetable.Data.Seeders
             var categories=  AddCategories();
             var carts = AddCarts(users);
             var orders = AddOrders(users);
-           
+            var foods = AddFoods(categories);
+            AddCartItems(foods, carts);
+
+
+        }
+
+        private IList<CartItem> AddCartItems(IList<Food> foods,IList<Cart> carts )
+        {
+            var cartItems = new List<CartItem>();
+            for (int i = 0; i < carts.Count; i++)
+            {
+                cartItems.Add(new CartItem()
+                {
+                    CartId = carts[i].Id,
+                    FoodId = foods[i].Id,
+                    Quantity = i + 1,
+                }) ;
+            }
+            _dbContext.AddRange(cartItems);
+            _dbContext.SaveChanges();
+            return cartItems;
+        }
+        private IList<Food> AddFoods(IList<Categories> categories)
+        {
+            var foods = new List<Food>();
+            for(int i=0;i<categories.Count;i++)
+            {
+                foods.Add(new Food()
+                {
+                    Name=$"Rau {i}",
+                    Unit="gam",
+                    Weight=700,
+                    Description="Rau nha em trong",
+                    UrlSlug= $"Rau {i}".GenerateSlug() ,
+                    Price=32000,
+                    CategoriesId = categories[i].Id,
+
+
+                });
+            }
+            _dbContext.AddRange(foods);
+            _dbContext.SaveChanges();
+            return foods;
         }
         private IList<Cart> AddCarts(IList<User> users)
         {

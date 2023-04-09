@@ -12,8 +12,8 @@ using store_vegetable.Data.Context;
 namespace store_vegetable.Data.Migrations
 {
     [DbContext(typeof(StoreVegetableDbContext))]
-    [Migration("20230407172648_addallownullimage")]
-    partial class addallownullimage
+    [Migration("20230409081243_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,10 +208,15 @@ namespace store_vegetable.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Adrress")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Phone")
                         .IsRequired()

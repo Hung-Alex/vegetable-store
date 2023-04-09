@@ -23,6 +23,7 @@ namespace store_vegetable.Data.Mappings
             builder.Property(x => x.UrlSlug).HasMaxLength(256).IsRequired();
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.ShowOnPage).HasColumnType("bit").HasDefaultValue(false);
+            
 
 
             

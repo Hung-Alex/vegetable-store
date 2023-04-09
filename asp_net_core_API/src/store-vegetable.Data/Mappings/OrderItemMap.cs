@@ -21,11 +21,13 @@ namespace store_vegetable.Data.Mappings
 
             builder.HasOne(x => x.Order)
                 .WithMany(s => s.Items)
-                .HasForeignKey(x=>x.OrderId);
+                .HasForeignKey(x=>x.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Food)
                 .WithMany(s => s.Items)
-                .HasForeignKey(x => x.FoodId);
+                .HasForeignKey(x => x.FoodId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

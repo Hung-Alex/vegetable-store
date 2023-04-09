@@ -8,5 +8,6 @@ namespace store_vegetable.Services.StoreVegetable
 {
     public interface ICartRepository
     {
+
     }
 }

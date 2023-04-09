@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using store_vegetable.Data.Context;
 using store_vegetable.Data.Seeders;
+using store_vegetable.Services.Media;
+using store_vegetable.Services.StoreVegetable;
 using System.Runtime.CompilerServices;
 
 
@@ -8,12 +10,14 @@ namespace WebApi.Extensions
 {
     public static  class WebApplicationExtensions
     {
-        public static string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+       
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddControllers();
             builder.Services.AddDbContext<StoreVegetableDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VegetableStoreDb")));
             builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
            
         
             
@@ -43,18 +47,16 @@ namespace WebApi.Extensions
         }
         public static WebApplicationBuilder ConfigureCors(this WebApplicationBuilder builder)
         {
-            
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                                      policy =>
-                                      {
-                                          policy.WithOrigins("http://example.com",
-                                                              "http://www.contoso.com")
-                                                              .AllowAnyHeader()
-                                                              .AllowAnyMethod();
-                                      });
-            });
+
+            builder.Services
+                    .AddCors(options =>
+                    {
+                        options.AddPolicy("storevegetable", policyBuider => policyBuider
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                );
+                    });
             return builder;
         }
         public static WebApplicationBuilder ConfigureSwaggerOpenApi(this WebApplicationBuilder builder)
@@ -75,11 +77,11 @@ namespace WebApi.Extensions
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseAuthorization();
+           
             app.MapControllers();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors("storevegetable");
 
             return app;
         }
