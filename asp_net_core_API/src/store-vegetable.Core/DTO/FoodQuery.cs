@@ -10,6 +10,6 @@ namespace store_vegetable.Core.DTO
     {
         public string Keyword { get; set; }
         public string CategorySlug { get;set; }
-
+        public string UrlSlug { get; set; }//food urlslug
     }
 }

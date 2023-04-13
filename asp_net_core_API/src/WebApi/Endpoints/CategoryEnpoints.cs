@@ -11,6 +11,10 @@ using store_vegetable.Services.Media;
 using store_vegetable.Data.Mappings;
 using store_vegetable.Core.Entites;
 using store_vegetable.Data.Extensions;
+using FluentValidation;
+using WebApi.Filters;
+using FluentValidation.AspNetCore;
+using WebApi.Extensions;
 
 namespace WebApi.Endpoints
 {
@@ -39,6 +43,7 @@ namespace WebApi.Endpoints
 
             return app;
         }
+
         private static async Task<IResult> GetCategories([FromServices] ICategoryRepository categoryRepository,IMapper mapper,HttpContext context)
         {
             var categories = await categoryRepository.GetAllCategories();
@@ -46,6 +51,7 @@ namespace WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(result));
 
         }
+
         public static async Task<IResult> GetFoodsByCategorySlug([FromRoute] string slug, [AsParameters] PagingModel model, ICategoryRepository categoryRepository)
         {
             var foodQuery = new FoodQuery
@@ -56,18 +62,40 @@ namespace WebApi.Endpoints
             var paginationResult = new PaginationResult<FoodDto>(foodlist);
             return Results.Ok(ApiResponse.Success( paginationResult));
         }
-        private static async Task<IResult> AddCategory(HttpContext context, ICategoryRepository categoryRepository, IMediaManager mediaManager,IMapper mapper)
+
+        private static async Task<IResult> AddCategory(HttpContext context
+            , ICategoryRepository categoryRepository
+            , IMediaManager mediaManager
+            ,IMapper mapper
+            ,IValidator<CategoryEditModel> validator)
+
         {
             var model = await CategoryEditModel.BindAsync(context);
+
+            // check model is valid
+            var validationResult = await validator.ValidateAsync(model);
+            if (!validationResult.IsValid)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, validationResult));
+            }
+
             var slug = model.Name.GenerateSlug();
             
             if (await categoryRepository.IsCategorySlugExistedAsync(0,slug))
             {
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
             }
-            var category = mapper.Map<Categories>(model);
+            var category = model.Id > 0 ? await categoryRepository.GetCategoryById(model.Id) : null;
+            if (category == null)
+            {
+                category = mapper.Map<Categories>(model);
+                
+            }
+            category.UrlSlug = slug;
+            category.Name = model.Name;
+            category.Description = model.Description;
+            category.ShowOnMenu = model.ShowOnMenu;
 
-            category.UrlSlug=slug;
 
             if (model.ImageFile?.Length > 0)
             {
@@ -82,6 +110,8 @@ namespace WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(mapper.Map<CategoryItem>(category), HttpStatusCode.Created));
         }
+
+     
         private static async Task<IResult> DeleteCategory(int id,ICategoryRepository categoryRepository)
         {
             var status= await categoryRepository.DeleteCategory(id);

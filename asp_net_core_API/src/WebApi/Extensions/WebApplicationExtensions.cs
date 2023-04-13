@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using store_vegetable.Data.Context;
 using store_vegetable.Data.Seeders;
 using store_vegetable.Services.Media;
 using store_vegetable.Services.StoreVegetable;
 using System.Runtime.CompilerServices;
-
+using FluentValidation;
+using WebApi.Models;
+using WebApi.Validations;
 
 namespace WebApi.Extensions
 {
@@ -18,10 +21,12 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IDataSeeder, DataSeeder>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
-           
-        
-            
-     
+            builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+          ;
+
+
+
+
 
 
 

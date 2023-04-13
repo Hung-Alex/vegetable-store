@@ -17,6 +17,7 @@ namespace store_vegetable.Services.StoreVegetable
         Task<bool> IsCategorySlugExistedAsync(int categoryId,string urlSlug,CancellationToken cancellationToken=default);
         Task<bool> DeleteCategory(int categoryId, CancellationToken cancellationToken = default);
         Task<bool> AddOrUpdateCategory(Categories category,CancellationToken cancellationToken=default);
+        Task<Categories> GetCategoryById(int id, CancellationToken cancellationToken = default);
 
     }
 }

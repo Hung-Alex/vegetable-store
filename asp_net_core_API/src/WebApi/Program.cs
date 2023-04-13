@@ -12,13 +12,15 @@ using WebApi.Extensions;
 using store_vegetable.Data.Seeders;
 using WebApi.Mapsters;
 using WebApi.Endpoints;
+using WebApi.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.ConfigureServices()
         .ConfigureCors()
         .ConfigureSwaggerOpenApi()
-        .ConfigureMapster();
+        .ConfigureMapster()
+        .ConfigureFluentValidation();
 }
 
 
@@ -27,6 +29,7 @@ var app = builder.Build();
     app.SetupRequestPieLines();
     app.UseDataSeeder();
     app.MapCategoryEnpoints();
+    app.MapFoodEndpoints();
     
     app.Run();
 }
