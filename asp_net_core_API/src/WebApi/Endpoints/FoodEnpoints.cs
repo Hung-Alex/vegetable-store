@@ -22,6 +22,15 @@ namespace WebApi.Endpoints
                  .WithName("GetFoods")
                  .Produces<ApiResponse<PaginationResult<FoodDto>>>();
 
+            routeGroupBuilder.MapGet("/BestSellingFood/{limit:int}", BestSellingFood)
+                 .WithName("BestSellingFood")
+                 .Produces<ApiResponse<List<FoodDto>>>();
+
+            routeGroupBuilder.MapGet("/{id:int}", GetFoodById)
+                 .WithName("GetFoodById")
+                 .Produces<ApiResponse<FoodDto>>();
+
+
             routeGroupBuilder.MapDelete("/{id:int}", DeleteFood)
                            .WithName("DeleteFood")
                            .Produces(204)
@@ -41,10 +50,16 @@ namespace WebApi.Endpoints
             var postsList = await foodRepository.GetFoodsByQuery(foodQuery, paging, foods => foods.ProjectToType<FoodDto>());
 
             var paginationResult = new PaginationResult<FoodDto>(postsList);
-             //await foodRepository.GetBestSellingFood(5);
+             
 
             return Results.Ok(ApiResponse.Success(paginationResult));
             
+        }
+        private static async Task<IResult> GetFoodById(int id,IFoodRepository foodRepository,IMapper mapper)
+        {
+            var food = await foodRepository.GetFoodById(id);
+
+            return Results.Ok(ApiResponse.Success( mapper.Map<FoodDto>(food)));
         }
         private static async Task<IResult> AddFood(HttpContext context
            , IFoodRepository foodRepository
@@ -98,7 +113,13 @@ namespace WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(mapper.Map<FoodDto>(food), HttpStatusCode.Created));
         }
 
-       
+
+        private static async Task<IResult> BestSellingFood(int limit, IFoodRepository foodRepository,IMapper mapper)
+        {
+            var foods = await foodRepository.GetBestSellingFood(limit);
+            
+            return Results.Ok( ApiResponse.Success(foods.Select(x=>mapper.Map<FoodDto>(x)).ToList().Take(limit)) );
+        }
 
         private static async Task<IResult> DeleteFood(int id, IFoodRepository foodRepository)
         {

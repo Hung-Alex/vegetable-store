@@ -30,6 +30,7 @@ var app = builder.Build();
     app.UseDataSeeder();
     app.MapCategoryEnpoints();
     app.MapFoodEndpoints();
+    app.MapFeedbackEnpoints();
     
     app.Run();
 }

@@ -20,6 +20,7 @@ namespace WebApi.Models
             var form = await context.Request.ReadFormAsync();
             return new FoodEditModel()
             {
+                Id = int.Parse(form["Id"]),
                 Name = form["Name"],
                 Description = form["Description"],
                 ImageFile = form.Files["ImageFile"],
