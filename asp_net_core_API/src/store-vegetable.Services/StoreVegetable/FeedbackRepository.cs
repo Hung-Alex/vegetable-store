@@ -58,7 +58,7 @@ namespace store_vegetable.Services.StoreVegetable
 
         public async Task<IPagedList<T>> GetFeedbacksBySlug<T>(FeedbackQuery feedQuery, IPagingParams pagingParams, Func<IQueryable<Feedback>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
         {
-            IQueryable<T> result = mapper(FilterFood(feedQuery));
+            IQueryable<T> result = mapper(FilterFeedback(feedQuery));
 
             return await result.ToPagedListAsync(pagingParams, cancellationToken);
         }
@@ -75,16 +75,15 @@ namespace store_vegetable.Services.StoreVegetable
             return await _context.SaveChangesAsync() > 0;
         }
 
-        private IQueryable<Feedback> FilterFood(FeedbackQuery feedbackQuery)
+        private IQueryable<Feedback> FilterFeedback(FeedbackQuery feedbackQuery)
         {
             IQueryable<Feedback> feedbacks = _context
                 .Set<Feedback>();
 
 
-            if (feedbackQuery.Status)
-            {
+            
                 feedbacks = feedbacks.Where(x => x.Status == feedbackQuery.Status);
-            }
+            
             if (!String.IsNullOrWhiteSpace(feedbackQuery.Title))
             {
                 feedbacks = feedbacks.Where(x => x.Title.Contains(feedbackQuery.Title));

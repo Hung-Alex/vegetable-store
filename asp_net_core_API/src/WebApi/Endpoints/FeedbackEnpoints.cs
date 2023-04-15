@@ -18,12 +18,12 @@ namespace WebApi.Endpoints
         public static WebApplication MapFeedbackEnpoints(this WebApplication app)
         {
             var routeGroupBuilder = app.MapGroup("/api/Feedbacks");
-            routeGroupBuilder.MapGet("/", GetFeedbacks)
+            routeGroupBuilder.MapGet("/all", GetFeedbacks)
                             .WithName("GetFeedbacks")
                             .Produces<ApiResponse<FeedbackDto>>();
 
-            routeGroupBuilder.MapGet("/{slug::regex(^[a-z0-9_-]+$)}/feedbacks", GetFeedbacksBySlug)
-                           .WithName("GetFeedbacksBySlug")
+            routeGroupBuilder.MapGet("/", GetFeedbacksByQuery)
+                           .WithName("GetFeedbacksByQuery")
                            .Produces<ApiResponse<PaginationResult<FeedbackDto>>>();
 
             routeGroupBuilder.MapDelete("/{id:int}", DeleteFeedback)
@@ -66,12 +66,10 @@ namespace WebApi.Endpoints
 
         }
 
-        public static async Task<IResult> GetFeedbacksBySlug([FromRoute] string slug, [AsParameters] PagingModel model,[FromServices] IFeedbackRepository feedbackRepository)
+        public static async Task<IResult> GetFeedbacksByQuery([AsParameters] FeedbackFilterModel filter, [AsParameters] PagingModel model,[FromServices] IFeedbackRepository feedbackRepository,IMapper mapper)
         {
-            var feedbackQuery = new FeedbackQuery
-            {
-                UrlSlug = slug
-            };
+            var feedbackQuery = mapper.Map<FeedbackQuery>(filter);
+           
             var feedbackList = await feedbackRepository.GetFeedbacksBySlug(feedbackQuery, model, foods => foods.ProjectToType<FeedbackDto>());
             var paginationResult = new PaginationResult<FeedbackDto>(feedbackList);
             return Results.Ok(ApiResponse.Success(paginationResult));
