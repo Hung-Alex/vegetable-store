@@ -13,15 +13,71 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navbar {
+  min-height: 80px;
+  background-color:white;
+  padding-left: 200px;
+  padding-right: 200px;
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+  -moz-box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 8px 6px -6px #999;
+  margin-bottom: 0px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 80px;
+  line-height: 80px;
+  color:#5FB709;
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 23px;
+  padding: 9px 10px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    padding-top: 26.5px;
+    padding-bottom: 26.5px;
+    line-height: 27px;
+    color: #3D4052;
+    font-weight: 500;
+    font-size: 16px;
+
+  }
+  .navbar-header a:hover,
+  .navbar-nav li a .active,
+ .navbar-nav li a:hover {
+    color:#5FB709;
+    background-color: white;
+    cursor: pointer;
+}
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.icon{
+  padding-right: 10px;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #262625;
+  color: #ffffff;
+  text-align: center;
+  height: 50px;  
+  border: 1px;
+  padding: 10px;
 }
 
 .App-link {
