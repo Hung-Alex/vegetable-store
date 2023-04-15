@@ -21,17 +21,17 @@ namespace store_vegetable.Services.StoreVegetable
             _context = context;
         }
 
-        public async Task<bool> AddOrUpdateCategory(Categories category, CancellationToken cancellationToken = default)
+        public async Task<bool> AddOrUpdateCategory(Categories feedback, CancellationToken cancellationToken = default)
         {
 
-            if (category.Id>0)
+            if (feedback.Id>0)
             {
                 
-                _context.Update(category);
+                _context.Update(feedback);
             }
             else
             {
-                _context.Add(category);
+                _context.Add(feedback);
             }
             return await _context.SaveChangesAsync()>0;   
         }

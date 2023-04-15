@@ -22,7 +22,9 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             builder.Services.AddScoped<IFoodRepository, FoodRepository>();
-          ;
+            builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+
+            ;
 
 
 
