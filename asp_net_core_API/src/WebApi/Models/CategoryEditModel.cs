@@ -4,7 +4,7 @@ namespace WebApi.Models
 {
     public class CategoryEditModel
     {
-       
+        public int Id { get; set; }
         public string Name { get; set; } // tên chủ đề
         public string Description { get; set; }// mô tả về chủ đề
         public IFormFile ImageFile { get; set; }
@@ -15,6 +15,7 @@ namespace WebApi.Models
             var form = await context.Request.ReadFormAsync();
             return new CategoryEditModel()
             {
+                Id = int.Parse(form["Id"]),
                 Name = form["Name"],
                 Description = form["Description"],
                 ImageFile = form.Files["ImageFile"],

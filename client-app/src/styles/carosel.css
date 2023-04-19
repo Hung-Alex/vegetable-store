@@ -1,5 +1,5 @@
 .carousel-bg{
-    background-image:url('D:\Workspace\BaiNhomWeb\store-vegetable\client-app\src\assets\images/slider1-min.jpg');
+    background-image:url('../assets/images/slider1-min.jpg');
     width:100%;
     height: 521px;
 }

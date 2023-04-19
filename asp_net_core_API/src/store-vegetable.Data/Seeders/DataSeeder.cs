@@ -4,6 +4,7 @@ using store_vegetable.Data.Context;
 using store_vegetable.Data.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,10 +33,32 @@ namespace store_vegetable.Data.Seeders
             var orders = AddOrders(users);
             var foods = AddFoods(categories);
             AddCartItems(foods, carts);
+            AddOrderItems(orders, foods);
 
 
         }
+        private IList<OrderItem> AddOrderItems(IList<Order> orders,IList<Food> foods)
+        {
+            var r = new Random();
+            var orderItems = new List<OrderItem>();
+            for (int i = 0; i < orders.Count; i++)
+            {
+                foreach (var item in foods)
+                {
+                    orderItems.Add(new OrderItem()
+                    {
+                        OrderId = orders[i].Id,
+                        FoodId = item.Id,
+                        Quantity=i+r.Next(1,10),
+                        Price=item.Price+r.Next(3000,50000),
 
+                    });
+                }
+            }
+            _dbContext.AddRange(orderItems);
+            _dbContext.SaveChanges();
+            return orderItems;
+        }
         private IList<CartItem> AddCartItems(IList<Food> foods,IList<Cart> carts )
         {
             var cartItems = new List<CartItem>();

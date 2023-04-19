@@ -1,4 +1,6 @@
-﻿using System;
+﻿using store_vegetable.Core.Contracts;
+using store_vegetable.Core.Entites;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,13 @@ namespace store_vegetable.Services.StoreVegetable
 {
     public interface ICartRepository
     {
-
+        
+        Task<bool> AddItemInCartAsync(CartItem Item,CancellationToken cancellationToken=default);
+        Task<bool> RemoveItemInCartAsync(int cartId, int foodId,CancellationToken cancellationToken = default);
+        Task<bool> RemoveAllItemInCartAsync(int id,CancellationToken cancellationToken = default);
+        Task<bool> CartHasEmptyAsync(int id,CancellationToken cancellationToken = default);
+        Task<IPagedList<T>> GetCartAsync<T>(CancellationToken cancellationToken = default);
+        Task<Cart> CreateCartAsync(int userId,CancellationToken cancellationToken = default);
+        Task<Cart> GetCartByUserIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }
