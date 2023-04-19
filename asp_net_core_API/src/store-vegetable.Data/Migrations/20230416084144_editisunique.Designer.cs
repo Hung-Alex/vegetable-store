@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using store_vegetable.Data.Context;
 
@@ -11,9 +12,11 @@ using store_vegetable.Data.Context;
 namespace store_vegetable.Data.Migrations
 {
     [DbContext(typeof(StoreVegetableDbContext))]
-    partial class StoreVegetableDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230416084144_editisunique")]
+    partial class editisunique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,7 +301,7 @@ namespace store_vegetable.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Expired")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()

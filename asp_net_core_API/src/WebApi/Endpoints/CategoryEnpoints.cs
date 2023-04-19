@@ -26,7 +26,7 @@ namespace WebApi.Endpoints
             var routeGroupBuilder = app.MapGroup("/api/categories");
             routeGroupBuilder.MapGet("/", GetCategories)
                             .WithName("GetCategories")
-                            .Produces<ApiResponse<CategoryDto>>();
+                            .Produces<ApiResponse<CategoryDto>>() ;
             routeGroupBuilder.MapGet("/{slug::regex(^[a-z0-9_-]+$)}/foods", GetFoodsByCategorySlug)
                            .WithName("GetFoodsByCategorySlug")
                            .Produces<ApiResponse<PaginationResult<FoodDto>>>();

@@ -15,6 +15,9 @@ namespace store_vegetable.Data.Mappings
         {
             builder.ToTable("Cart");
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.UserId).IsUnique();
+
+
 
            
         }

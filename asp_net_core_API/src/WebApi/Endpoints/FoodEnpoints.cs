@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using store_vegetable.Core.Collections;
 using store_vegetable.Core.DTO;
 using store_vegetable.Core.Entites;
@@ -8,6 +11,7 @@ using store_vegetable.Data.Extensions;
 using store_vegetable.Services.Media;
 using store_vegetable.Services.StoreVegetable;
 using System.Net;
+using System.Security.Claims;
 using WebApi.Models;
 
 namespace WebApi.Endpoints
@@ -20,7 +24,10 @@ namespace WebApi.Endpoints
 
             routeGroupBuilder.MapGet("/", GetFoods)
                  .WithName("GetFoods")
-                 .Produces<ApiResponse<PaginationResult<FoodDto>>>();
+                 .Produces<ApiResponse<PaginationResult<FoodDto>>>()
+                 .RequireAuthorization("1st");
+                 
+                 
 
             routeGroupBuilder.MapGet("/BestSellingFood/{limit:int}", BestSellingFood)
                  .WithName("BestSellingFood")
@@ -44,8 +51,29 @@ namespace WebApi.Endpoints
             return app;
         }
 
-        private async static Task<IResult> GetFoods([AsParameters] FoodFilterModel model,[AsParameters]PagingModel paging,IFoodRepository foodRepository,IMapper mapper)
+        private async static Task<IResult> GetFoods([AsParameters] FoodFilterModel model,[AsParameters]PagingModel paging, HttpContext context, IFoodRepository foodRepository,IMapper mapper )
         {
+            
+            var authenticateResult = await context.AuthenticateAsync("Admin");
+            if (authenticateResult?.Succeeded == true)
+            {
+                string userId = authenticateResult.Principal.FindFirstValue("Id");
+                string userRole = authenticateResult.Principal.FindFirstValue("Role");
+
+                // Xử lý thông tin user tại đây
+                // ...
+            }
+            else
+            {
+                var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
+                // Xử lý AuthenticateResult thất bại ở đây, có thể ghi log hoặc trả về response thích hợp
+                // ...
+            }
+
+
+
+
+
             var foodQuery = mapper.Map<FoodQuery>(model);
             var postsList = await foodRepository.GetFoodsByQuery(foodQuery, paging, foods => foods.ProjectToType<FoodDto>());
 

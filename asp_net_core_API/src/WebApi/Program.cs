@@ -13,6 +13,7 @@ using store_vegetable.Data.Seeders;
 using WebApi.Mapsters;
 using WebApi.Endpoints;
 using WebApi.Validations;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -23,7 +24,6 @@ var builder = WebApplication.CreateBuilder(args);
         .ConfigureFluentValidation();
 }
 
-
 var app = builder.Build();
 {
     app.SetupRequestPieLines();
@@ -31,7 +31,9 @@ var app = builder.Build();
     app.MapCategoryEnpoints();
     app.MapFoodEndpoints();
     app.MapFeedbackEnpoints();
-    
+    app.MapLoginEndpoints();
+
+
     app.Run();
 }
 

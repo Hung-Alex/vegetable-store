@@ -28,7 +28,10 @@ namespace store_vegetable.Data.Mappings
             builder.HasOne<Cart>(x => x.Cart)
                  .WithOne(s => s.User)
                  .HasForeignKey<Cart>(x => x.UserId);
-           
+
+            builder.HasOne<UserToken>(x => x.UserToken)
+                .WithOne(s => s.User)
+                .HasForeignKey<UserToken>(x => x.UserId);
 
         }
     }

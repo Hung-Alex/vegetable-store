@@ -17,5 +17,6 @@ namespace store_vegetable.Core.Entites
         public IList<Order> Orders { get; set; }
         
         public Cart Cart { get; set; }
+        public UserToken UserToken { get; set; }
     }
 }

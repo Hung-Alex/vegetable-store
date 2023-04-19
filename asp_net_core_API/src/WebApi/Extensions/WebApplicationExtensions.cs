@@ -8,13 +8,18 @@ using System.Runtime.CompilerServices;
 using FluentValidation;
 using WebApi.Models;
 using WebApi.Validations;
+using WebApi.Authencation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore.Design;
+using WebApi.JwtToken;
 
 namespace WebApi.Extensions
 {
     public static  class WebApplicationExtensions
     {
        
-        public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
+        public static  WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddControllers();
             builder.Services.AddDbContext<StoreVegetableDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VegetableStoreDb")));
@@ -23,14 +28,30 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             builder.Services.AddScoped<IFoodRepository, FoodRepository>();
             builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
-
-            ;
-
-
-
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
+            builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
 
 
+            builder.Services.AddAuthentication(option =>
+            {
 
+            })
+                .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("Admin", opst =>
+                {
+
+                });
+               
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("1st", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Admin")
+                          .RequireAuthenticatedUser()
+                          .Build(); 
+                });
+            });
 
             return builder;
         }
@@ -86,6 +107,7 @@ namespace WebApi.Extensions
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseAuthorization();
            
             app.MapControllers();
             app.UseCors("storevegetable");
