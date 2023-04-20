@@ -26,6 +26,11 @@ namespace WebApi.Endpoints
                 .Produces<ApiResponse>()
                 .Accepts<CartItemEditModel>("multipart/form-data")
                 .RequireAuthorization("User");
+
+            routeGroupBuilder.MapPut("/", UpdateItemInCart)
+               .WithName("UpdateItemInCart")
+               .Produces<ApiResponse<PaginationResult<CartItemDto>>>()
+               .RequireAuthorization("User");
             return app;
         }
         private static async Task<IResult> GetAllItemInCart([AsParameters] PagingModel paging,HttpContext context,[FromServices]ICartRepository cartRepository)
@@ -76,6 +81,41 @@ namespace WebApi.Endpoints
 
             var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
             return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, failureReason));
+        }
+
+        private static async Task<IResult> UpdateItemInCart(CartItemEditModel model,[FromServices]ICartRepository cartRepository,HttpContext context)
+        {
+            
+            var authenticateResult = await context.AuthenticateAsync("User");
+            if (authenticateResult?.Succeeded == true)
+            {
+                int userId = int.Parse(authenticateResult.Principal.FindFirstValue("Id"));
+                var cart = await cartRepository.GetCartByUserIdAsync(userId);
+                var cartItem = await cartRepository.ItemIsExitedInCart(model.Id, cart.Id);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = cartItem.Quantity + model.Quantity;
+                    await cartRepository.UpdateCartItem(cartItem);
+                    return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+
+                }
+                else
+                {
+                    await cartRepository.AddItemInCartAsync(new CartItem()
+                    {
+                        CartId = cart.Id,
+                        Quantity = model.Quantity,
+                        FoodId = model.Id
+
+                    });
+                    return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+
+                }
+            }
+
+            var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
+            return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, failureReason));
+            return Results.Ok();
         }
     }
 }
