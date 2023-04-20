@@ -60,6 +60,7 @@ namespace store_vegetable.Services.StoreVegetable
             else
             {
                 user.Token = Token;
+                user.Status = true;
               
             }
             

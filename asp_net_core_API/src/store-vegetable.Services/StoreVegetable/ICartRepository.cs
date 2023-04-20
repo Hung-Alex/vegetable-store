@@ -1,4 +1,5 @@
 ﻿using store_vegetable.Core.Contracts;
+using store_vegetable.Core.DTO;
 using store_vegetable.Core.Entites;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,8 @@ namespace store_vegetable.Services.StoreVegetable
         Task<IPagedList<T>> GetCartAsync<T>(CancellationToken cancellationToken = default);
         Task<Cart> CreateCartAsync(int userId,CancellationToken cancellationToken = default);
         Task<Cart> GetCartByUserIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<CartItem> ItemIsExitedInCart(int id,int cartId, CancellationToken cancellationToken = default);
+        Task<bool> UpdateCartItem(CartItem cartItem, CancellationToken cancellationToken = default);
+        Task<IPagedList<CartItemDto>> GetAllItemInCart(int cartId, IPagingParams pagingParams, CancellationToken cancellationToken = default);
     }
 }

@@ -27,6 +27,11 @@ namespace store_vegetable.Services.StoreVegetable
 
         }
 
+        public async Task<User> GetUserByUserName(string username, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<User>().FirstOrDefaultAsync(x => x.Name == username);
+        }
+
         public async Task<bool> IsUserNameExisted(string username, CancellationToken cancellationToken = default)
         {
             return await _context.Set<User>().AnyAsync(x => x.Name == username);

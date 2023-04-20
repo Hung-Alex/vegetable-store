@@ -24,8 +24,8 @@ namespace WebApi.Endpoints
 
             routeGroupBuilder.MapGet("/", GetFoods)
                  .WithName("GetFoods")
-                 .Produces<ApiResponse<PaginationResult<FoodDto>>>()
-                 .RequireAuthorization("1st");
+                 .Produces<ApiResponse<PaginationResult<FoodDto>>>();
+                 
                  
                  
 
@@ -53,26 +53,6 @@ namespace WebApi.Endpoints
 
         private async static Task<IResult> GetFoods([AsParameters] FoodFilterModel model,[AsParameters]PagingModel paging, HttpContext context, IFoodRepository foodRepository,IMapper mapper )
         {
-            
-            var authenticateResult = await context.AuthenticateAsync("Admin");
-            if (authenticateResult?.Succeeded == true)
-            {
-                string userId = authenticateResult.Principal.FindFirstValue("Id");
-                string userRole = authenticateResult.Principal.FindFirstValue("Role");
-
-                // Xử lý thông tin user tại đây
-                // ...
-            }
-            else
-            {
-                var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
-                // Xử lý AuthenticateResult thất bại ở đây, có thể ghi log hoặc trả về response thích hợp
-                // ...
-            }
-
-
-
-
 
             var foodQuery = mapper.Map<FoodQuery>(model);
             var postsList = await foodRepository.GetFoodsByQuery(foodQuery, paging, foods => foods.ProjectToType<FoodDto>());

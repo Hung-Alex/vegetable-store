@@ -31,6 +31,9 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
             builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+
+
 
 
             builder.Services.AddAuthentication(option =>
@@ -39,17 +42,27 @@ namespace WebApi.Extensions
             })
                 .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("Admin", opst =>
                 {
+                    opst.Role = "admin";
+                })
+            .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("User", opst =>
+             {
+                 opst.Role = "user";
+             });
 
-                });
-               
 
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("1st", policy =>
+                options.AddPolicy("Admin", policy =>
                 {
                     policy.AddAuthenticationSchemes("Admin")
                           .RequireAuthenticatedUser()
                           .Build(); 
+                });
+                options.AddPolicy("User", policy =>
+                {
+                    policy.AddAuthenticationSchemes("User")
+                          .RequireAuthenticatedUser()
+                          .Build();
                 });
             });
 

@@ -34,6 +34,7 @@ namespace WebApi.Authencation
         protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
 
+            string Role = Options.Role;
             /// kiem token co duoc gui hay ko
             /// kiem tra token co hop le hay ko
             /// kiem tra token trong usertoken co hay khong hay null
@@ -58,7 +59,7 @@ namespace WebApi.Authencation
                 return AuthenticateResult.Fail("Not authorized");
 
             }
-            if (!(user.Role=="admin"))
+            if (!(user.Role==Role))
             {
                 return AuthenticateResult.Fail("Not authorized");
             }

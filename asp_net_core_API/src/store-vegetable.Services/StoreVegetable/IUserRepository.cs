@@ -15,6 +15,7 @@ namespace store_vegetable.Services.StoreVegetable
         Task<bool> RemoveUser(int id, CancellationToken cancellationToken = default);
         Task<User> SetRole(int id, string role);
         Task<User> GetById(int id);
+        Task<User> GetUserByUserName(string username, CancellationToken cancellationToken=default);
 
     }
 }

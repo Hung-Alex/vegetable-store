@@ -32,6 +32,7 @@ var app = builder.Build();
     app.MapFoodEndpoints();
     app.MapFeedbackEnpoints();
     app.MapLoginEndpoints();
+    app.MapCartEnpoints();
 
 
     app.Run();
