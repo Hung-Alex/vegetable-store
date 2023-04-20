@@ -27,9 +27,13 @@ namespace WebApi.Endpoints
                 .Accepts<CartItemEditModel>("multipart/form-data")
                 .RequireAuthorization("User");
 
-            routeGroupBuilder.MapPut("/", UpdateItemInCart)
-               .WithName("UpdateItemInCart")
-               .Produces<ApiResponse<PaginationResult<CartItemDto>>>()
+            routeGroupBuilder.MapDelete("/{id:int}", DeleteItemInCart)
+               .WithName("DeleteItemInCart")
+               .Produces<ApiResponse>()
+               .RequireAuthorization("User");
+            routeGroupBuilder.MapDelete("/", DeleteItemAllInCart)
+               .WithName("DeleteItemAllInCart")
+               .Produces<ApiResponse>()
                .RequireAuthorization("User");
             return app;
         }
@@ -115,7 +119,53 @@ namespace WebApi.Endpoints
 
             var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
             return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, failureReason));
-            return Results.Ok();
+            
         }
+
+        private static async Task<IResult> DeleteItemInCart(int id,[FromServices] ICartRepository cartRepository, HttpContext context)
+        {
+
+            var authenticateResult = await context.AuthenticateAsync("User");
+            if (authenticateResult?.Succeeded == true)
+            {
+                int userId = int.Parse(authenticateResult.Principal.FindFirstValue("Id"));
+                var cart = await cartRepository.GetCartByUserIdAsync(userId);
+              
+                if (await cartRepository.RemoveItemInCartAsync(cart.Id,id))
+                {
+                    return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+                }
+                else
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound,"không tìm thấy mặt hàng trong giỏ hàng"));
+                }
+            }
+
+            var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
+            return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, failureReason));
+        }
+
+        private static async Task<IResult> DeleteItemAllInCart([FromServices] ICartRepository cartRepository, HttpContext context)
+        {
+            var authenticateResult = await context.AuthenticateAsync("User");
+            if (authenticateResult?.Succeeded == true)
+            {
+                int userId = int.Parse(authenticateResult.Principal.FindFirstValue("Id"));
+                var cart = await cartRepository.GetCartByUserIdAsync(userId);
+
+                if (await cartRepository.RemoveAllItemInCartAsync(cart.Id))
+                {
+                    return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+                }
+                else
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, "giỏ hàng rỗng"));
+                }
+            }
+
+            var failureReason = authenticateResult?.Failure?.Message ?? "Unknown reason";
+            return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, failureReason));
+        }
+
     }
 }

@@ -8,9 +8,6 @@ namespace store_vegetable.Services.StoreVegetable
 {
     public class OrderRepository : IOrderRepository
     {
-        public Task CreateOrder(int userId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

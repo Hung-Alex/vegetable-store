@@ -34,12 +34,14 @@ namespace WebApi.Endpoints
             routeGroupBuilder.MapDelete("/{id:int}",DeleteCategory)
                             .WithName("DeleteCategory")
                             .Produces(204)
-                            .Produces(404);
+                            .Produces(404)
+                            .RequireAuthorization("Admin");
             routeGroupBuilder.MapPost("/",AddCategory)
                 .WithName("AddCategory")
                 .Accepts<CategoryEditModel>("multipart/form-data")
                 .Produces(401)
-                .Produces<ApiResponse<CategoryItem>>();
+                .Produces<ApiResponse<CategoryItem>>()
+                .RequireAuthorization("Admin");
 
             return app;
         }

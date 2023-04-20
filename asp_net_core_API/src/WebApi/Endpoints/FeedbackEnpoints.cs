@@ -29,18 +29,21 @@ namespace WebApi.Endpoints
             routeGroupBuilder.MapDelete("/{id:int}", DeleteFeedback)
                             .WithName("DeleteFeedback")
                             .Produces(204)
-                            .Produces(404);
+                            .Produces(404)
+                            .RequireAuthorization("Admin");
 
             routeGroupBuilder.MapPost("/", AddFeeback)
                 .WithName("AddFeeback")
                 .Accepts<FeedbackEditModel>("multipart/form-data")
                 .Produces(401)
-                .Produces<ApiResponse<FeedbackDto>>();
+                .Produces<ApiResponse<FeedbackDto>>()
+                .RequireAuthorization("User");
 
             routeGroupBuilder.MapPost("/{id:int}/feedback", setStatusFeedback)
                              .WithName("setStatusFeedback")
                              .Produces(401)
-                             .Produces<ApiResponse<FeedbackDto>>();
+                             .Produces<ApiResponse<FeedbackDto>>()
+                             .RequireAuthorization("Admin");
 
             return app;
         }

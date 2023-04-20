@@ -41,13 +41,15 @@ namespace WebApi.Endpoints
             routeGroupBuilder.MapDelete("/{id:int}", DeleteFood)
                            .WithName("DeleteFood")
                            .Produces(204)
-                           .Produces(404);
+                           .Produces(404)
+                           .RequireAuthorization("Admin");
 
             routeGroupBuilder.MapPost("/", AddFood)
                 .WithName("AddFood")
                 .Accepts<FoodEditModel>("multipart/form-data")
                 .Produces(401)
-                .Produces<ApiResponse<FoodDto>>();
+                .Produces<ApiResponse<FoodDto>>()
+                .RequireAuthorization("Admin");
             return app;
         }
 

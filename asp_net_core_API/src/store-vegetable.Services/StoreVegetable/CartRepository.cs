@@ -91,7 +91,7 @@ namespace store_vegetable.Services.StoreVegetable
 
         public async Task<bool> RemoveAllItemInCartAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Set<OrderItem>().Where(x => x.OrderId == id).ExecuteDeleteAsync() > 0;
+            return await _context.Set<CartItem>().Where(x => x.CartId == id).ExecuteDeleteAsync() > 0;
         }
 
         public async Task<bool> RemoveItemInCartAsync(int cartId, int foodId, CancellationToken cancellationToken = default)
