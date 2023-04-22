@@ -1,4 +1,6 @@
 ﻿using store_vegetable.Core.Contracts;
+using store_vegetable.Core.DTO;
+using store_vegetable.Core.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,11 @@ namespace store_vegetable.Services.StoreVegetable
 {
     public interface IOrderRepository
     {
-        Task<bool> CreateOrder(int cartId, CancellationToken cancellationToken = default);
+        Task<bool> CreateOrder(int userId,int cartId,Order order, CancellationToken cancellationToken = default);
+
+        Task<IPagedList<T>> GetPagedListOrder<T>(OrderQuery orderQuery, IPagingParams pagingParams,Func< IQueryable<Order>, IQueryable<T>> map, CancellationToken cancellationToken = default);
+
+        Task<bool> SetOrderStatus(int idOrder, CancellationToken cancellationToken = default);
         
 
     }

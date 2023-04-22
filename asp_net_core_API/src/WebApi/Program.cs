@@ -33,6 +33,7 @@ var app = builder.Build();
     app.MapFeedbackEnpoints();
     app.MapLoginEndpoints();
     app.MapCartEnpoints();
+    app.MapOrderEnpoints();
 
 
     app.Run();

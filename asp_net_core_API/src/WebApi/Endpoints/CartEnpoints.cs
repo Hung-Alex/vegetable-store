@@ -35,6 +35,10 @@ namespace WebApi.Endpoints
                .WithName("DeleteItemAllInCart")
                .Produces<ApiResponse>()
                .RequireAuthorization("User");
+            routeGroupBuilder.MapPut("/", UpdateItemInCart)
+                .WithName("UpdateItemInCart")
+                .Produces<ApiResponse>()
+                .RequireAuthorization("User");
             return app;
         }
         private static async Task<IResult> GetAllItemInCart([AsParameters] PagingModel paging,HttpContext context,[FromServices]ICartRepository cartRepository)
@@ -98,7 +102,7 @@ namespace WebApi.Endpoints
                 var cartItem = await cartRepository.ItemIsExitedInCart(model.Id, cart.Id);
                 if (cartItem != null)
                 {
-                    cartItem.Quantity = cartItem.Quantity + model.Quantity;
+                    cartItem.Quantity = model.Quantity;
                     await cartRepository.UpdateCartItem(cartItem);
                     return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
 

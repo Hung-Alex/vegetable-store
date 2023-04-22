@@ -30,6 +30,8 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
             builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
 
