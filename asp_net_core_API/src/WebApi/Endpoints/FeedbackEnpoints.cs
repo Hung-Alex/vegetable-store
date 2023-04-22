@@ -20,11 +20,15 @@ namespace WebApi.Endpoints
             var routeGroupBuilder = app.MapGroup("/api/Feedbacks");
             routeGroupBuilder.MapGet("/all", GetFeedbacks)
                             .WithName("GetFeedbacks")
-                            .Produces<ApiResponse<FeedbackDto>>();
+                            .Produces<ApiResponse<FeedbackDto>>()
+                            .RequireAuthorization("Admin");
 
             routeGroupBuilder.MapGet("/", GetFeedbacksByQuery)
                            .WithName("GetFeedbacksByQuery")
-                           .Produces<ApiResponse<PaginationResult<FeedbackDto>>>();
+                           .Produces<ApiResponse<PaginationResult<FeedbackDto>>>()
+                            .RequireAuthorization("Admin");
+
+
 
             routeGroupBuilder.MapDelete("/{id:int}", DeleteFeedback)
                             .WithName("DeleteFeedback")
