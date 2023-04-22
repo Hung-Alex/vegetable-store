@@ -36,6 +36,12 @@ namespace WebApi.Endpoints
                             .Produces(204)
                             .Produces(404)
                             .RequireAuthorization("Admin");
+
+            routeGroupBuilder.MapGet("{id:int}", GetCategoryById)
+                           .WithName("GetCategoryById")
+                           .Produces<ApiResponse<Categories>>();
+            
+
             routeGroupBuilder.MapPost("/",AddCategory)
                 .WithName("AddCategory")
                 .Accepts<CategoryEditModel>("multipart/form-data")
@@ -112,7 +118,15 @@ namespace WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(mapper.Map<CategoryItem>(category), HttpStatusCode.Created));
         }
-
+        private static async Task<IResult> GetCategoryById(int id, [FromServices] ICategoryRepository categoryRepository)
+        {
+            var category= await categoryRepository.GetCategoryById(id);
+            if (category==null)
+            {
+                Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest,$"Không tìm thấy chủ đề với mã là {id}"));
+            }
+            return Results.Ok(ApiResponse.Success(category));
+        }
      
         private static async Task<IResult> DeleteCategory(int id,ICategoryRepository categoryRepository)
         {

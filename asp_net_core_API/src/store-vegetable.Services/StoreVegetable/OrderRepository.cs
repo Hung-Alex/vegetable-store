@@ -31,6 +31,8 @@ namespace store_vegetable.Services.StoreVegetable
             var total = orderItems.Sum(x => x.Quantity * x.Price);
             order.Total = total;
             order.OrderDate = DateTime.Now;
+            var orderItemsList = await TakeCartItemToOrder(order.Id, cartId);
+            _context.AddRange(orderItemsList);
             return await _context.SaveChangesAsync()>0;
         }
         private async Task<IList<OrderItem>>  TakeCartItemToOrder(int OrderId,int cartId) {
@@ -58,7 +60,7 @@ namespace store_vegetable.Services.StoreVegetable
         
         private IQueryable<Order> FilterOrder(OrderQuery orderQuery)
         {
-            IQueryable<Order> query = _context.Set<Order>();
+            IQueryable<Order> query = _context.Set<Order>().Include(x=>x.Items).ThenInclude(x=>x.Food);
             if (!string.IsNullOrEmpty(orderQuery.Address))
             {
                 query.Where(x => x.Address.Contains(orderQuery.Address));
@@ -79,6 +81,7 @@ namespace store_vegetable.Services.StoreVegetable
 
             return await _context.SaveChangesAsync() > 0;
         }
+
 
         
     }

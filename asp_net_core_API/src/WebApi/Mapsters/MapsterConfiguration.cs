@@ -24,7 +24,13 @@ namespace WebApi.Mapsters
             config.NewConfig<FeedbackQuery, Feedback>();
             config.NewConfig<FeedbackQuery, FeedbackFilterModel>();
 
-            config.NewConfig<OrderDto, Order>();
+            config.NewConfig<OrderEditModel, Order>();
+
+            config.NewConfig<OrderQuery, OrderFilterDto>();
+
+            config.NewConfig<OrderItem, OrderItemDto>();
+
+
 
 
 
