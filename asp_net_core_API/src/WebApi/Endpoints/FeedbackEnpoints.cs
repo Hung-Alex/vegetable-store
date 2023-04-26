@@ -43,7 +43,7 @@ namespace WebApi.Endpoints
                 .Produces<ApiResponse<FeedbackDto>>()
                 .RequireAuthorization("User");
 
-            routeGroupBuilder.MapPost("/{id:int}/feedback", setStatusFeedback)
+            routeGroupBuilder.MapPut("/{id:int}/feedback", setStatusFeedback)
                              .WithName("setStatusFeedback")
                              .Produces(401)
                              .Produces<ApiResponse<FeedbackDto>>()

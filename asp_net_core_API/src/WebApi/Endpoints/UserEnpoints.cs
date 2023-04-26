@@ -40,6 +40,11 @@ namespace WebApi.Endpoints
                .Accepts<UserEditModel>("multipart/form-data")
                .Produces(401)
                .RequireAuthorization("Admin");
+            groupRouteBuilder.MapDelete("/{id:int}", DeleteUser)
+               .WithName("DeleteUser")
+               .Produces<ApiResponse>()         
+               .Produces(401)
+               .RequireAuthorization("Admin");
             return app;
         }
         private async static Task<IResult> GetPagedUsers([AsParameters] UserFilterModel model,[AsParameters] PagingModel pagingModel,IUserRepository userRepository,HttpContext context,IMapper mapper) 
@@ -49,7 +54,7 @@ namespace WebApi.Endpoints
             var paginationResult = new PaginationResult<UserDto>(users);
             return Results.Ok(ApiResponse.Success(paginationResult));
         }
-        public async static  Task<IResult> GetUserById(int id, [FromServices] IUserRepository userRepository ,IMapper mapper)
+        private async static  Task<IResult> GetUserById(int id, [FromServices] IUserRepository userRepository ,IMapper mapper)
         {
             var user = await userRepository.GetById(id);
 
@@ -58,7 +63,7 @@ namespace WebApi.Endpoints
 
             return Results.Ok(ApiResponse.Success(mapper.Map<UserDto>(user)));
         }
-        public async static Task<IResult> UpdateUser(int id,[FromServices] IUserRepository userRepository,IMapper mapper,HttpContext context,[FromServices]IValidator<UserEditModel> validator)
+        private async static Task<IResult> UpdateUser(int id,[FromServices] IUserRepository userRepository,IMapper mapper,HttpContext context,[FromServices]IValidator<UserEditModel> validator)
         {
             var userEditModel = await UserEditModel.BindAsync(context);
             var validatorResult = await validator.ValidateAsync(userEditModel);
@@ -79,5 +84,15 @@ namespace WebApi.Endpoints
 
             return checkUpdate? Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent)): Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"cập nhật thất bại  với mã người dùng{ id}"));
         }
+        private async static Task<IResult> DeleteUser(int id, [FromServices] IUserRepository userRepository)
+        {
+            if (!await userRepository.RemoveUser(id))
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest,$"không tìm thấy người dùng với mã {id}"));
+
+            }
+            return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+        }
+        
     }
 }
