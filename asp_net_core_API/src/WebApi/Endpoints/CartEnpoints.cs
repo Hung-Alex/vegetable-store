@@ -31,13 +31,14 @@ namespace WebApi.Endpoints
                .WithName("DeleteItemInCart")
                .Produces<ApiResponse>()
                .RequireAuthorization("User");
-            routeGroupBuilder.MapDelete("/", DeleteItemAllInCart)
+            routeGroupBuilder.MapDelete("/all", DeleteItemAllInCart)
                .WithName("DeleteItemAllInCart")
                .Produces<ApiResponse>()
                .RequireAuthorization("User");
             routeGroupBuilder.MapPut("/", UpdateItemInCart)
                 .WithName("UpdateItemInCart")
                 .Produces<ApiResponse>()
+                 .Accepts<CartItemEditModel>("multipart/form-data")
                 .RequireAuthorization("User");
             return app;
         }
@@ -126,7 +127,7 @@ namespace WebApi.Endpoints
             
         }
 
-        private static async Task<IResult> DeleteItemInCart(int id,[FromServices] ICartRepository cartRepository, HttpContext context)
+        private static async Task<IResult> DeleteItemInCart([FromBody]int id,[FromServices] ICartRepository cartRepository, HttpContext context)
         {
 
             var authenticateResult = await context.AuthenticateAsync("User");

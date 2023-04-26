@@ -34,6 +34,7 @@ var app = builder.Build();
     app.MapLoginEndpoints();
     app.MapCartEnpoints();
     app.MapOrderEnpoints();
+    app.MapUserEndpoints();
 
 
     app.Run();

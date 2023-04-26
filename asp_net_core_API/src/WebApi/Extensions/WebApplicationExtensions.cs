@@ -31,7 +31,6 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-
             builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
 
@@ -67,6 +66,10 @@ namespace WebApi.Extensions
                           .Build();
                 });
             });
+
+
+
+
 
             return builder;
         }
@@ -107,6 +110,10 @@ namespace WebApi.Extensions
             //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+
+
             return builder;
         }
 
