@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Design;
 using WebApi.JwtToken;
+using WebApi.Settings;
+using Microsoft.Extensions.Configuration;
+using MailKit;
+using WebApi.Mail;
 
 namespace WebApi.Extensions
 {
@@ -48,6 +52,10 @@ namespace WebApi.Extensions
             .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("User", opst =>
              {
                  opst.Role = "user";
+             })
+            .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("Logout", opst =>
+             {
+                 opst.Role = null;
              });
 
 
@@ -62,6 +70,12 @@ namespace WebApi.Extensions
                 options.AddPolicy("User", policy =>
                 {
                     policy.AddAuthenticationSchemes("User")
+                          .RequireAuthenticatedUser()
+                          .Build();
+                });
+                options.AddPolicy("Logout", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Logout")
                           .RequireAuthenticatedUser()
                           .Build();
                 });
@@ -111,12 +125,14 @@ namespace WebApi.Extensions
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-
-
             return builder;
         }
-
+        public static WebApplicationBuilder ConfigureMailService(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<Mail.IMailService, Mail.MailService>();
+            return builder;
+        }
         public static WebApplication SetupRequestPieLines(this WebApplication app)
         {
             // Configure the HTTP request pipeline.

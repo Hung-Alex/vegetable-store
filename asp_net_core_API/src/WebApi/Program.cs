@@ -21,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
         .ConfigureCors()
         .ConfigureSwaggerOpenApi()
         .ConfigureMapster()
+        .ConfigureMailService()
         .ConfigureFluentValidation();
 }
 
