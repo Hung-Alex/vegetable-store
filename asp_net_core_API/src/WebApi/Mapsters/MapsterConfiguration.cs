@@ -30,15 +30,8 @@ namespace WebApi.Mapsters
 
             config.NewConfig<OrderItem, OrderItemDto>();
 
-
-
-
-
-
-
-
-
-
+            config.NewConfig<UserQuery, UserFilterModel>();
+            config.NewConfig<User, UserDto>();
 
         }
     }

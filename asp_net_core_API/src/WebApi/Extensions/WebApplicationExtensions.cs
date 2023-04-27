@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore.Design;
 using WebApi.JwtToken;
+using WebApi.Settings;
+using Microsoft.Extensions.Configuration;
+using MailKit;
+using WebApi.Mail;
 
 namespace WebApi.Extensions
 {
@@ -31,7 +35,6 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-
             builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
 
@@ -49,6 +52,10 @@ namespace WebApi.Extensions
             .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("User", opst =>
              {
                  opst.Role = "user";
+             })
+            .AddScheme<TokenAuthenticationSchemeOptions, AuthenticationService>("Logout", opst =>
+             {
+                 opst.Role = null;
              });
 
 
@@ -66,7 +73,17 @@ namespace WebApi.Extensions
                           .RequireAuthenticatedUser()
                           .Build();
                 });
+                options.AddPolicy("Logout", policy =>
+                {
+                    policy.AddAuthenticationSchemes("Logout")
+                          .RequireAuthenticatedUser()
+                          .Build();
+                });
             });
+
+
+
+
 
             return builder;
         }
@@ -107,9 +124,15 @@ namespace WebApi.Extensions
             //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             return builder;
         }
-
+        public static WebApplicationBuilder ConfigureMailService(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<Mail.IMailService, Mail.MailService>();
+            return builder;
+        }
         public static WebApplication SetupRequestPieLines(this WebApplication app)
         {
             // Configure the HTTP request pipeline.

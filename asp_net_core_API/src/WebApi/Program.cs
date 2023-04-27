@@ -21,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
         .ConfigureCors()
         .ConfigureSwaggerOpenApi()
         .ConfigureMapster()
+        .ConfigureMailService()
         .ConfigureFluentValidation();
 }
 
@@ -34,6 +35,7 @@ var app = builder.Build();
     app.MapLoginEndpoints();
     app.MapCartEnpoints();
     app.MapOrderEnpoints();
+    app.MapUserEndpoints();
 
 
     app.Run();

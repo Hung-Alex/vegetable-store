@@ -22,7 +22,7 @@ namespace WebApi.Endpoints
                             .WithName("Logout")
                             .Produces(404)
                             .Produces<ApiResponse>()
-                            .RequireAuthorization("User");
+                            .RequireAuthorization("Logout");
             routeGroupBuilder.MapPost("/Register", Register)
                             .WithName("Register")
                             .Produces(404)

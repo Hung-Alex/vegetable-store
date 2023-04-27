@@ -59,10 +59,14 @@ namespace WebApi.Authencation
                 return AuthenticateResult.Fail("Not authorized");
 
             }
-            if (!(user.Role==Role))
+            if (Role!=null)
             {
-                return AuthenticateResult.Fail("Not authorized");
+                if (!(user.Role == Role))
+                {
+                    return AuthenticateResult.Fail("Not authorized");
+                }
             }
+           
             if ( !await _userTokenRepository.CheckTokenIsExisted(user.Id,token))
             {
                 return AuthenticateResult.Fail("Not authorized");
