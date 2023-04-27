@@ -3,6 +3,7 @@ import '../styles/help.css';
 
 const Help = () => {
     return (
+        
         <div className="help-background">
             <div className="jumbotron help-bg">
                 <div className="help-text">
