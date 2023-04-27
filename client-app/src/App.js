@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import Help from './components/Help';
 import Product from './components/Product';
 import Contact from './components/Contact';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/help' element={<Help />} />
         <Route path="/product" element={<Product />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/signin" element={<Signin/>}/>
+        <Route path="/signup" element={<Signup/>}/>
       </Routes>
       <Footer />
     </BrowserRouter>

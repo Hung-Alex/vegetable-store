@@ -12,7 +12,7 @@ const Header = () => {
                     <li className="active"><NavLink to="/product"><i className="glyphicon glyphicon-search icon"></i>Products</NavLink></li>
                     <li ><a><i className="fa fa-percent icon"></i>Offers</a></li>
                     <li><NavLink to="/help"><i className="fa fa-life-ring icon"></i>Help</NavLink></li>
-                    <li><NavLink to ="/contact"><i className="fa fa-life-ring icon"></i>Contact</NavLink></li>
+                    <li><NavLink to="/contact"><i className="fa fa-star icon"></i>Contact</NavLink></li>
 
                     {/* {props.user.userId != null ? (<li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown"><span className="glyphicon glyphicon-user icon"></span>{props.user.email !== null ? props.user.email : "Hello, Sign in"}</a>
@@ -27,7 +27,8 @@ const Header = () => {
                         </ul>
                     </li>) : ''} */}
                     <li><a><i className="fa fa-cart-plus icon"></i><span>Cart</span></a></li>
-                   
+                    <li><NavLink to="/signin"><i className="fa fa-sign-in icon"></i>Sign In</NavLink></li>
+
                 </ul>
             </div>
         </nav>
