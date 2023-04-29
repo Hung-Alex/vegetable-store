@@ -6,6 +6,8 @@ import Homepage from './components/Homepage';
 import Footer from './components/Footer';
 import Help from './components/Help';
 import Product from './components/Product';
+import About from './components/About';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route index element={<Homepage />} />
         <Route path='/help' element={<Help />} />
         <Route path="/product" element={<Product />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
       <Footer />
     </BrowserRouter>

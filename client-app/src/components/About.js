@@ -1,65 +1,70 @@
 import React from 'react';
 import '../styles/about.css';
-import about1 from '../assets/images/about1-min.png';
-import about2 from '../assets/images/about2-min.png';
-import about3 from '../assets/images/about3-min.png';
-import about4 from '../assets/images/hubs-min.png';
+import banner from '../assets/images/bg_1.jpg';
+import img1 from '../assets/images/about.jpg';
 
-function About() {
-    return (
-        <div id="about" className="container about">
-            <div className="row">
-                <div className="col-sm-4">
-                    <div className="about-heading"><h2>About Us</h2></div>
-                    <div className="about-content"><h4>Agricart is Fresh Produce from the Farm. We are here the solve the problem of farmers who is not getting much profits due to lot of chain between customers and farmers.</h4>
-                        <p>We collect Fresh Vegetables and Fruits from Farmers Directly and delivery to customers and small businesses.</p></div>
-                    <button className="btn btn-cust about-btn">Get in Touch</button>
+class About extends React.Component {
+    render() {
+        return (
+            <>
+                <div className='about-banner-container'>
+                    <div className='about-banner-content'>
+                        <span>HOME ABOUT US</span>
+                        <h1>ABOUT US</h1>
+                    </div>
                 </div>
-                <div className="col-sm-8">
-                    <ul className="timeline">
-
-                        <li>
-                            <div className="direction-r">
-                                <div className="flag-wrapper">
-                                    <span className="flag"><img src={about1} alt="Farmers" />Farmers</span>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div className="direction-l">
-                                <div className="flag-wrapper">
-                                    <span className="flag"><img src={about2} alt="Collection Cente" /> Collection Center</span>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div className="direction-r">
-                                <div className="flag-wrapper">
-                                    <span className="flag"><img src={about3} alt="Distribution Center" />Distribution Center</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="direction-l">
-                                <div className="flag-wrapper">
-                                    <span className="flag"><img src={about4} alt="Hubs" />Hubs</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="direction-r">
-                                <div className="flag-wrapper">
-                                    <span className="flag"><img src="https://firebasestorage.googleapis.com/v0/b/agricart-c7914.appspot.com/o/banners%2Fcustomers-min.png?alt=media&token=1252f5bf-7aea-4fe9-a379-0d52fba9edb0" alt="Customers" />Customers</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                <div className='about-container'>
+                    <div className='img'></div>
+                    <div className='about-container-content'>
+                        <h1>Welcome to Vegefoods an eCommerce website</h1>
+                        <p>
+                            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
+                            there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics,
+                            a large language ocean.
+                        </p>
+                        <p>
+                            But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her,
+                            made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.
+                        </p>
+                        <p>
+                            <a className='button'>Shop now</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div>
-    )
+                <div className='about-subcribe'>
+                    <div className='about-subcribe-container'>
+                        <h3>Subcribe to our Newsletter</h3>
+                        <p>Get e-mail updates about our latest shops and special offers</p>
+                    </div>
+                    <div className='about-subcribe-input'>
+                        <input type='text' placeholder='Enter email address' />
+                        <button className='subcribe'>Subcribe</button>
+                    </div>
+                </div>
+                <div className='about-banner1-container'>
+                    <div className='about-banner1-content'>
+                        <span>
+                            <h1>10,000</h1>
+                            <p>HAPPY CUSTOMERS</p>
+                        </span>
+                        <span>
+                            <h1>100</h1>
+                            <p>BRANCHES</p>
+                        </span>
+                        <span>
+                            <h1>1,000</h1>
+                            <p>PARTNER</p>
+                        </span>
+                        <span>
+                            <h1>100</h1>
+                            <p>AWARDS</p>
+                        </span>
+                    </div>
+                </div>
+
+            </>
+        )
+    }
 }
 
-export default About
+export default About;
