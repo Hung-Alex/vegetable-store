@@ -7,6 +7,11 @@ const authuSlice = createSlice({
             currentUser: null,
             isFetching: false,
             error: false
+        },
+        register: {
+            isFetching: false,
+            error: false,
+            success: false
         }
     },
     reducers: {
@@ -21,6 +26,19 @@ const authuSlice = createSlice({
         loginFail: (state) => {
             state.login.isFetching = false;
             state.login.error = true;
+        },
+        registerStart: (state) => {
+            state.register.isFetching = true;
+        },
+        registerSuccess: (state) => {
+            state.register.isFetching = false;
+            state.register.error = false;
+            state.register.success = true;
+        },
+        registerFail: (state) => {
+            state.register.isFetching = false;
+            state.register.error = true;
+            state.register.success = false;
         }
     }
 })
@@ -28,7 +46,10 @@ const authuSlice = createSlice({
 export const {
     loginStart,
     loginSuccess,
-    loginFail
+    loginFail,
+    registerStart,
+    registerSuccess,
+    registerFail
 } = authuSlice.actions;
 
 export default authuSlice.reducer;

@@ -12,8 +12,8 @@ const Login = () => {
     const handleLogin = (event) => {
         event.preventDefault();
         const newUser = {
-            username: username,
-            password: password,
+            userName: username,
+            password: password
         };
         loginUser(newUser, dispatch, navigate);
     };

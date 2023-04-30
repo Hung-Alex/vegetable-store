@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
-    const [user, setUser] = useState(null);
+    const user = useSelector((state) => state.auth.login.currentUser);
+    console.log(user);
     return (
         <nav className="navbar">
             <div className="container-fluid">
@@ -18,7 +20,7 @@ const Header = () => {
                     {user ? (
                         <>
                             <li><NavLink to="/logout"><i className="fa fa-user icon"></i>Log Out</NavLink></li>
-                            <li><a>Hi, {user}</a></li>
+                            <li><a>Hi, {user.result.username}</a></li>
                         </>
 
                     ) : (
