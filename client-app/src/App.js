@@ -9,18 +9,27 @@ import Product from './components/Product';
 import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
+import Layout from './components/Layout';
+import AdminLayout from './components/Admin/Layout';
+import Dashboard from './components/Admin/Dashboard';
+import ProductManagement from './components/Admin/ProductManagement';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
-        <Route path='/' element={<Header />} />
-        <Route index element={<Homepage />} />
-        <Route path='/help' element={<Help />} />
-        <Route path="/product" element={<Product />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Layout />}>
+          {/* <Route path='/' element={<Header />} /> */}
+          <Route index element={<Homepage />} />
+          <Route path='/help' element={<Help />} />
+          <Route path="/product" element={<Product />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/login' element={<Login />} />
+        </Route>
+        <Route path='/admin' element={<AdminLayout />}>
+          <Route path='/admin' element={<Dashboard />} />
+          <Route path='/admin/product' element={<ProductManagement />} />
+        </Route>
       </Routes>
       <Routes>
         <Route path='/register' element={<Register />} />

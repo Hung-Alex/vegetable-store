@@ -1,0 +1,7 @@
+.product-management-container {
+    width: 1380px;
+    height: 620px;
+    background-color: white;
+    margin: 0 40px 0 40px;
+    overflow-y: scroll;
+}
