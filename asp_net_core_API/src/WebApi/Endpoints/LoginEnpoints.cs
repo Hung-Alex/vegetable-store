@@ -51,7 +51,7 @@ namespace WebApi.Endpoints
         }
         private static async Task<IResult> Logout(HttpContext context, IUserRepository userRepository, IUserTokenRepository userTokenRepository)
         {
-            var authenticateResult = await context.AuthenticateAsync("User");// sai logic >-<
+            var authenticateResult = await context.AuthenticateAsync("Logout");// sai logic >-<
             if (authenticateResult?.Succeeded == true)
             {
                 int userId = int.Parse(authenticateResult.Principal.FindFirstValue("Id"));
