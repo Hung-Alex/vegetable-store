@@ -40,7 +40,6 @@ namespace WebApi.Authencation
             /// kiem tra token trong usertoken co hay khong hay null
             /// neu hop le het thif chuyen nos qua middware
             /// 
-            
             if (!Request.Headers.ContainsKey("Authorization"))
             {
                 return AuthenticateResult.Fail("Not authorized");

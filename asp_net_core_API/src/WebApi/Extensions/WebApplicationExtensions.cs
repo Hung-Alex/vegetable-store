@@ -20,10 +20,10 @@ using WebApi.Mail;
 
 namespace WebApi.Extensions
 {
-    public static  class WebApplicationExtensions
+    public static class WebApplicationExtensions
     {
-       
-        public static  WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
+
+        public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddControllers();
             builder.Services.AddDbContext<StoreVegetableDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VegetableStoreDb")));
@@ -33,7 +33,7 @@ namespace WebApi.Extensions
             builder.Services.AddScoped<IFoodRepository, FoodRepository>();
             builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserTokenRepository,UserTokenRepository>();
+            builder.Services.AddScoped<IUserTokenRepository, UserTokenRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
@@ -65,7 +65,7 @@ namespace WebApi.Extensions
                 {
                     policy.AddAuthenticationSchemes("Admin")
                           .RequireAuthenticatedUser()
-                          .Build(); 
+                          .Build();
                 });
                 options.AddPolicy("User", policy =>
                 {
@@ -89,7 +89,7 @@ namespace WebApi.Extensions
         }
         public static IApplicationBuilder UseDataSeeder(this IApplicationBuilder app)
         {
-            using var scope=app.ApplicationServices.CreateScope();
+            using var scope = app.ApplicationServices.CreateScope();
             try
             {
                 scope.ServiceProvider
@@ -146,7 +146,7 @@ namespace WebApi.Extensions
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
             app.MapControllers();
             app.UseCors("storevegetable");
 
