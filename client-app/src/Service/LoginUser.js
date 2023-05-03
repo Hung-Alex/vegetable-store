@@ -1,15 +1,5 @@
 import axios from "axios";
-import {
-  loginFailed,
-  loginStart,
-  loginSuccess,
-  logoutFailed,
-  logoutStart,
-  logoutSuccess,
-  registerFailed,
-  registerStart,
-  registerSuccess,
-} from "../Redux/authSlice";
+import { loginStart,loginSuccess,loginFail,registerStart,registerFail,registerSuccess,logoutFailed,logoutStart,logoutSuccess } from "../Redux/authSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
   dispatch(loginStart());
@@ -26,7 +16,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginSuccess(res.data));
     navigate("/");
   } catch (error) {
-    dispatch(loginFailed());
+    dispatch(loginFail());
   }
 };
 export const registerUser = async (user, dispatch, navigate) => {
@@ -44,7 +34,7 @@ export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerSuccess());
     navigate("/signin");
   } catch (error) {
-    dispatch(registerFailed());
+    dispatch(registerFail);
   }
 };
 
@@ -68,7 +58,7 @@ export const logOutUser = async (token, dispatch, navigate) => {
       .catch((error) => {
         console.error("Error occurred during logout:", error);
       });
-    dispatch(logoutSuccess());
+     dispatch(logoutSuccess());
     navigate("/");
   } catch (error) {
     dispatch(logoutFailed());

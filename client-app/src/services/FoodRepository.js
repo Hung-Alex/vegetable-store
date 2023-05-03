@@ -21,10 +21,31 @@ export async function getFoodById(id = 0) {
     return null;
 }
 
-export function addOrUpdateFood(formData) {
-    return post_api("https://localhost:7027/api/Foods/", formData);
-}
-
 export function getCategories(formData) {
     return get_api("https://localhost:7027/api/categories/", formData);
 }
+
+export async function addOrUpdateFood(formData,token, navigate) {
+    try {
+      const formData = new FormData();
+     
+      fetch("https://localhost:7027/api/Foods/", {
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          console.log("add to food  successful!");
+        })
+        .catch((error) => {
+          console.error("Error occurred during add to food :", error);
+        });
+  
+      
+    } catch (error) {}
+  }

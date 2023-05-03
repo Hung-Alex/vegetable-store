@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/login.css';
 import { NavLink, useNavigate } from "react-router-dom";
-import { loginUser } from "../redux/apiRequest";
+import { loginUser } from "../Service/LoginUser";
 import { useDispatch } from "react-redux";
 const Login = () => {
     const [username, setUsername] = useState("");

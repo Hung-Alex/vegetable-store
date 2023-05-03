@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { isInteger, decode } from "../../utils/Utils";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { isEmptyOrSpaces } from "../../utils/Utils";
 import { addOrUpdateFood, getFoodById, getCategories } from "../../services/FoodRepository";
+import { useSelector } from "react-redux";
 
 const EditProduct = () => {
     const initialState = {
@@ -14,17 +15,17 @@ const EditProduct = () => {
         weight: '',
         image: '',
         description: '',
-        urlSlug: '',
         price: 0,
-        categories: {},
+        categories: 0,
         showOnPage: false
     },
         [food, setFood] = useState(initialState),
         [categories, setCategories] = useState([]);
-
+    const navigate=useNavigate();
     let { id } = useParams();
     id = id ?? 0;
-
+    const user =useSelector((state)=>state.auth.login.currentUser);
+    const token=user?.result.token;
     useEffect(() => {
         document.title = 'Add or update food';
 
@@ -47,7 +48,7 @@ const EditProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let form = new FormData(e.target);
-        addOrUpdateFood(form).then(data => {
+        addOrUpdateFood(form,token,navigate).then(data => {
             if (data)
                 alert('Save food success!');
             else
@@ -78,24 +79,6 @@ const EditProduct = () => {
                                 onChange={e => setFood({
                                     ...food,
                                     name: e.target.value
-                                })}
-                            />
-                        </div>
-                    </div>
-                    <div className="row mb-3" style={{ marginBottom: "30px" }}>
-                        <Form.Label className="col-sm-2 col-form-label">
-                            Slug
-                        </Form.Label>
-                        <div className="col-sm-10">
-                            <Form.Control
-                                type="text"
-                                name="urlSlug"
-                                title="Url slug"
-                                required
-                                value={food.urlSlug || ''}
-                                onChange={e => setFood({
-                                    ...food,
-                                    urlSlug: e.target.value
                                 })}
                             />
                         </div>

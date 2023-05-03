@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/register.css";
-import { registerUser } from "../redux/apiRequest";
+import { registerUser } from "../Service/LoginUser";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
