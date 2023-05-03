@@ -1,0 +1,14 @@
+.head-title {
+    width: 1460px;
+    height: 760px;
+    background-color: #F9F9F9;
+    margin: 0 24px;
+    border-radius: 24px;
+}
+
+.head-title h1 {
+    font-size: 36px;
+	font-weight: 600;
+	padding: 40px 0 20px 40px;
+	color: #342E37;
+}

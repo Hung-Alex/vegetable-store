@@ -1,0 +1,78 @@
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 280px;
+	height: 100%;
+	background: white;
+	font-family: 'Lato', sans-serif;
+	transition: .3s ease;
+	overflow-x: hidden;
+	scrollbar-width: none;
+    /* background-color: #E4E4E4; */
+}
+
+.sidebar::--webkit-scrollbar {
+	display: none;
+}
+
+.sidebar.hide {
+	width: 60px;
+}
+
+.sidebar .brand {
+	font-size: 24px;
+	font-weight: 700;
+	height: 56px;
+	display: flex;
+	align-items: center;
+    margin-left: 20px;
+	color: #3C91E6;
+    position: relative;
+	top: 0;
+	left: 0;
+	/* background: #F9F9F9; */
+	z-index: 500;
+	padding-bottom: 20px;
+	box-sizing: content-box;
+    text-decoration: none;
+}
+
+.sidebar .brand .bx {
+	min-width: 60px;
+	display: flex;
+	justify-content: center;
+}
+
+.sidebar .side-menu {
+	width: 100%;
+	margin-top: 48px;
+    padding: 0;
+}
+
+.sidebar .side-menu li {
+	height: 48px;
+	margin-left: 6px;
+	border-radius: 12px;
+	padding: 0 20px;
+    font-size: 16px;
+    line-height: 48px;
+}
+
+.sidebar .side-menu li:hover {
+    background-color: #E4E4E4;
+    cursor: pointer;
+}
+
+.sidebar .side-menu li a {
+    text-decoration: none;
+    padding: 10px;
+}
+
+.sidebar .side-menu li a i {
+    margin-right: 20px;
+}
+
+.sidebar .side-menu li a.logout {
+	color: #DB504A;
+}

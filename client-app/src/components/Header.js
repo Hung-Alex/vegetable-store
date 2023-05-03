@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -23,12 +24,14 @@ const Header = () => {
                     <NavLink className="navbar-brand" to="/">AgriCart</NavLink>
                 </div>
                 <ul className="nav navbar-nav navbar-right">
+                    <li className="active"><NavLink to="/"><i className="fa fa-home icon"></i>Home</NavLink></li>
                     <li className="active"><NavLink to="/product"><i className="glyphicon glyphicon-search icon"></i>Products</NavLink></li>
-                    <li ><a><i className="fa fa-percent icon"></i>Offers</a></li>
+                    <li className="active"><NavLink to="/about"><i className="fa fa-user icon"></i>About</NavLink></li>
                     <li><NavLink to="/help"><i className="fa fa-life-ring icon"></i>Help</NavLink></li>
+
                     <li><NavLink to="/contact"><i className="fa fa-star icon"></i>Contact</NavLink></li>
 
-                  
+     
                     <li><a><i className="fa fa-cart-plus icon"></i><span>Cart</span></a></li>
                     {user!=null? (
                         <>

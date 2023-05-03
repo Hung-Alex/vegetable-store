@@ -1,0 +1,117 @@
+.content {
+	position: relative;
+	width: calc(100% - 280px);
+	left: 280px;
+	transition: .3s ease;
+}
+
+.sidebar.hide ~ .content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+.navadmin {
+	height: 56px;
+	background: white;
+	padding: 0 24px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+	font-family: 'Lato', sans-serif;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+    justify-content: space-between;
+}
+
+.navadmin::before {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	bottom: -40px;
+	left: 0;
+	border-radius: 50%;
+	box-shadow: -20px -20px 0 white;
+}
+
+.navadmin .bx.bx-menu {
+	cursor: pointer;
+	color: #342E37;
+	font-size: 24px;
+}
+
+.navadmin form {
+	max-width: 400px;
+	width: 100%;
+	margin-right: auto;
+}
+
+.navadmin form .form-input {
+	display: flex;
+	align-items: center;
+	height: 36px;
+}
+
+.navadmin form .form-input input {
+	flex-grow: 1;
+	padding: 0 16px;
+	height: 100%;
+	border: none;
+	background: #eee;
+	border-radius: 36px 0 0 36px;
+	outline: none;
+	width: 100%;
+	color: #342E37;
+}
+
+.navadmin form .form-input button {
+	width: 36px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #3C91E6;
+	color: white;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 0 36px 36px 0;
+	cursor: pointer;
+    margin-right: 50px;
+}
+
+.navadmin .notification {
+	font-size: 20px;
+	position: relative;
+}
+
+.navadmin .notification .num {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: 2px solid white;
+	background: #DB504A;
+	color: white;
+	font-weight: 700;
+	font-size: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.navadmin .profile img {
+	width: 36px;
+	height: 36px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.navadmin .profile {
+    position: absolute;
+    right: 50px;
+}
