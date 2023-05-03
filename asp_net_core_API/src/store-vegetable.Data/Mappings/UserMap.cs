@@ -17,7 +17,7 @@ namespace store_vegetable.Data.Mappings
             builder.ToTable("User");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
-            builder.Property(x=>x.Password).IsRequired().HasMaxLength(20);
+            builder.Property(x=>x.Password).IsRequired().HasMaxLength(2732);
             builder.Property(x=>x.Role).IsRequired().HasMaxLength(60).HasDefaultValue("user");
 
             builder.HasMany(x=>x.Orders)

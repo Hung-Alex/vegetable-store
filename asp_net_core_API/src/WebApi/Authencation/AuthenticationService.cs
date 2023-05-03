@@ -40,7 +40,6 @@ namespace WebApi.Authencation
             /// kiem tra token trong usertoken co hay khong hay null
             /// neu hop le het thif chuyen nos qua middware
             /// 
-            
             if (!Request.Headers.ContainsKey("Authorization"))
             {
                 return AuthenticateResult.Fail("Not authorized");
@@ -59,10 +58,14 @@ namespace WebApi.Authencation
                 return AuthenticateResult.Fail("Not authorized");
 
             }
-            if (!(user.Role==Role))
+            if (Role!=null)
             {
-                return AuthenticateResult.Fail("Not authorized");
+                if (!(user.Role == Role))
+                {
+                    return AuthenticateResult.Fail("Not authorized");
+                }
             }
+           
             if ( !await _userTokenRepository.CheckTokenIsExisted(user.Id,token))
             {
                 return AuthenticateResult.Fail("Not authorized");

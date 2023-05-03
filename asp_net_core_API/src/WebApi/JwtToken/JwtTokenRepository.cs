@@ -14,7 +14,7 @@ namespace WebApi.JwtToken
         {
             _configuration = configuration;
         }
-        public async Task<string> GenerateJwtToken(User user )
+        public async Task<string> GenerateJwtToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Issuer"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -23,8 +23,8 @@ namespace WebApi.JwtToken
             {
         new Claim("id",user.Id.ToString()),
         new Claim("role",user.Role)
-      
-        
+
+
     };
 
             var token = new JwtSecurityToken(
@@ -41,8 +41,8 @@ namespace WebApi.JwtToken
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = tokenHandler.ReadJwtToken(token).Claims;
-            var id=claims.FirstOrDefault(c => c.Type == "id").Value;
-            return int.Parse( id);
+            var id = claims.FirstOrDefault(c => c.Type == "id").Value;
+            return int.Parse(id);
         }
 
         public async Task<bool> IsJwtTokenValid(string token)
@@ -52,7 +52,7 @@ namespace WebApi.JwtToken
 
             try
             {
-                
+
                 var validatedToken = tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -63,7 +63,7 @@ namespace WebApi.JwtToken
                     ValidAudience = _configuration["Jwt:Audience"],
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
-                },  out SecurityToken validatedSecurityToken);
+                }, out SecurityToken validatedSecurityToken);
                 return true;
             }
             catch
@@ -71,6 +71,6 @@ namespace WebApi.JwtToken
                 return false;
             }
         }
-        
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MailKit;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,10 @@ namespace WebApi.Endpoints
                            .WithName("GetFeedbacksByQuery")
                            .Produces<ApiResponse<PaginationResult<FeedbackDto>>>()
                             .RequireAuthorization("Admin");
+            routeGroupBuilder.MapGet("/{id:int}", GetFeedbackById)
+                           .WithName("GetFeedbackById")
+                           .Produces<ApiResponse<PaginationResult<FeedbackDto>>>()
+                           .RequireAuthorization("Admin");
 
 
 
@@ -43,13 +48,39 @@ namespace WebApi.Endpoints
                 .Produces<ApiResponse<FeedbackDto>>()
                 .RequireAuthorization("User");
 
-            routeGroupBuilder.MapPost("/{id:int}/feedback", setStatusFeedback)
+            routeGroupBuilder.MapPut("/{id:int}/feedback", setStatusFeedback)
                              .WithName("setStatusFeedback")
                              .Produces(401)
                              .Produces<ApiResponse<FeedbackDto>>()
                              .RequireAuthorization("Admin");
 
+            routeGroupBuilder.MapPost("/SendMessage", SendMessage)
+                             .WithName("SendMessage")
+                              .Accepts<MailRequest>("multipart/form-data")
+                             .Produces(401)
+                             .Produces<ApiResponse>()
+                             .RequireAuthorization("Admin");
             return app;
+        }
+        private static async Task<IResult> SendMessage(HttpContext context,Mail.IMailService mailService)
+        {
+            var mailRequest = await MailRequest.BlindAsync(context);
+            try
+            {
+                await mailService.SendEmailAsync(mailRequest);
+                return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+            }
+            catch (Exception ex)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, $"Gửi thất bại tới {mailRequest.ToEmail}"));
+            }
+            return Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent));
+        }
+        private static async Task<IResult> GetFeedbackById([FromRoute] int id, [FromServices] IFeedbackRepository feedbackRepository,IMapper mapper)
+        {
+            var feedback = await feedbackRepository.GetFeedbackById(id);
+            if (feedback == null) return Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound,$"Không tìm thấy feedback với mã {id}"));
+            return Results.Ok(ApiResponse.Success(mapper.Map<FeedbackDto>(feedback)));
         }
         private static async Task<IResult> setStatusFeedback([FromRoute] int id, [FromServices] IFeedbackRepository feedbackRepository,IMapper mapper)
         {

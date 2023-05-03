@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import React from 'react';
 import Header from './components/Header';
 import Homepage from './components/Homepage';
 import Footer from './components/Footer';
@@ -14,6 +14,12 @@ import AdminLayout from './components/Admin/Layout';
 import Dashboard from './components/Admin/Dashboard';
 import ProductManagement from './components/Admin/ProductManagement';
 import EditProduct from './components/Admin/EditProduct';
+import Contact from './components/Contact';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import Filter from './components/Filter';
+import ListProduct from './components/ListProduct';
+
 
 function App() {
   return (
@@ -23,9 +29,11 @@ function App() {
           {/* <Route path='/' element={<Header />} /> */}
           <Route index element={<Homepage />} />
           <Route path='/help' element={<Help />} />
-          <Route path="/product" element={<Product />} />
+         <Route path='/product'element={<ListProduct  />}/>
           <Route path='/about' element={<About />} />
-          <Route path='/login' element={<Login />} />
+            <Route path="/signin" element={<Signin/>}/>
+        <Route path="/signup" element={<Signup/>}/>
+        
         </Route>
         <Route path='/admin' element={<AdminLayout />}>
           <Route path='/admin' element={<Dashboard />} />
@@ -36,6 +44,7 @@ function App() {
       </Routes>
       <Routes>
         <Route path='/register' element={<Register />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -22,7 +22,7 @@ namespace WebApi.Endpoints
                             .WithName("Logout")
                             .Produces(404)
                             .Produces<ApiResponse>()
-                            .RequireAuthorization("User");
+                            .RequireAuthorization("Logout");
             routeGroupBuilder.MapPost("/Register", Register)
                             .WithName("Register")
                             .Produces(404)
@@ -51,7 +51,7 @@ namespace WebApi.Endpoints
         }
         private static async Task<IResult> Logout(HttpContext context, IUserRepository userRepository, IUserTokenRepository userTokenRepository)
         {
-            var authenticateResult = await context.AuthenticateAsync("User");// sai logic >-<
+            var authenticateResult = await context.AuthenticateAsync("Logout");// sai logic >-<
             if (authenticateResult?.Succeeded == true)
             {
                 int userId = int.Parse(authenticateResult.Principal.FindFirstValue("Id"));

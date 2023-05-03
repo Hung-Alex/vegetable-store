@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { logOutUser } from '../Service/LoginUser';
 
 const Header = () => {
-    const user = useSelector((state) => state.auth.login.currentUser);
-    console.log(user);
+    
+   
+    // @ts-ignore
+    const user =useSelector((state) => state.auth.login.currentUser);
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
+    const token=user?.result.token;
+    const handleLogOut=()=>{
+        logOutUser(token,dispatch,navigate);
+    }
     return (
         <nav className="navbar">
             <div className="container-fluid">
@@ -16,16 +28,24 @@ const Header = () => {
                     <li className="active"><NavLink to="/product"><i className="glyphicon glyphicon-search icon"></i>Products</NavLink></li>
                     <li className="active"><NavLink to="/about"><i className="fa fa-user icon"></i>About</NavLink></li>
                     <li><NavLink to="/help"><i className="fa fa-life-ring icon"></i>Help</NavLink></li>
-                    <li><a><i className="fa fa-cart-plus icon"></i><span>Cart</span></a></li>
-                    {user ? (
-                        <>
-                            <li><NavLink to="/logout"><i className="fa fa-user icon"></i>Log Out</NavLink></li>
-                            <li><a>Hi, {user.result.username}</a></li>
-                        </>
 
-                    ) : (
-                        <li><NavLink to="/login"><i className="fa fa-user icon"></i>Login</NavLink></li>
+                    <li><NavLink to="/contact"><i className="fa fa-star icon"></i>Contact</NavLink></li>
+
+     
+                    <li><a><i className="fa fa-cart-plus icon"></i><span>Cart</span></a></li>
+                    {user!=null? (
+                        <>
+                           <li><NavLink to="/"><i className="fa fa-sign-in icon"></i>Hi {user.result.role}</NavLink></li>
+                           <li><NavLink to="/" onClick={handleLogOut}><i className="fa fa-sign-in icon" ></i>Logout</NavLink></li>
+
+                        </>
+                    ):(
+                        <>
+                           <li><NavLink to="/signin"><i className="fa fa-sign-in icon"></i>Sign In</NavLink></li>
+                        </>
                     )}
+                    
+
                 </ul>
             </div>
         </nav>
