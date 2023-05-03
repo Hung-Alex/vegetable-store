@@ -29,11 +29,11 @@ function App() {
           {/* <Route path='/' element={<Header />} /> */}
           <Route index element={<Homepage />} />
           <Route path='/help' element={<Help />} />
-         <Route path='/product'element={<ListProduct  />}/>
+          <Route path='/product' element={<ListProduct />} />
           <Route path='/about' element={<About />} />
-            <Route path="/signin" element={<Signin/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-        
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+
         </Route>
         <Route path='/admin' element={<AdminLayout />}>
           <Route path='/admin' element={<Dashboard />} />
@@ -46,7 +46,7 @@ function App() {
         <Route path='/register' element={<Register />} />
 
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
 
   );

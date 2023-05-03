@@ -23,7 +23,7 @@ const ListProduct = () => {
     GetCategory().then((data) => {
       if (data) {
         setCategory(data);
-      }else{
+      } else {
         setCategory([]);
       }
     });

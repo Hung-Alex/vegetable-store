@@ -5,7 +5,7 @@ import { data } from '../data.js';
 const Filter = (props) => {
     const menuItems = [...new Set(data.map((Val) => Val.courseName))];
     return (
-        <div className="row sticky searchFilter">
+        <div className="row sticky searchFilter" style={{ width: "1214px" }}>
             <div className="col-md-4">
                 <div className="inner-addon left-addon">
                     <i className="glyphicon glyphicon-search"></i>
