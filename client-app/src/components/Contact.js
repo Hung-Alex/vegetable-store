@@ -2,53 +2,46 @@ import React from 'react';
 import '../styles/contact.css';
 const Contact = () => {
     return (
-        <div className="contact-background">
-            <div className="jumbotron contact-bg">
-                <div className="contact-text">
-                    <div className="contact-header">Contact</div>
-                    <div className="contact-header-text">Contact us</div>
-                </div>
-            </div>
-            <div className="container">
-                <div className="row d-flex mb-5 contact-info">
-                    <div className="w-100"></div>
-                    <div className="col-md-3 d-flex">
-                        <div className="info bg-white p-4">
-                            <p><span>Address:</span> <a>Đà Lạt</a> </p>
-                        </div>
-                    </div>
-                    <div className="col-md-3 d-flex">
-                        <div className="info bg-white p-4">
-                            <p><span>Phone:</span> <a>123456789</a></p>
-                        </div>
-                    </div>
-                    <div className="col-md-3 d-flex">
-                        <div className="info bg-white p-4">
-                            <p><span>Email:</span> <a>info@yoursite.com</a></p>
-                        </div>
-                    </div>
-                    <div className="col-md-3 d-flex">
-                        <div className="info bg-white p-4">
-                            <p><span>Website</span> <a href="#">yoursite.com</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div >
-                    <div className="col-md-6 order-md-last d-flex">
-                        <form action="#" >
-                            <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Your Name" />
+        <div className="contact3 py-5">
+            <div className="row no-gutters">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="card-shadow">
                             </div>
-                            <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Your Email" />
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="contact-box ml-3">
+                                <h1 className="font-weight-light mt-2">Contact Us</h1>
+                                <form className="mt-4">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <div className="form-group mt-2">
+                                                <input className="form-control" type="text" placeholder="Name" />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-12">
+                                            <div className="form-group mt-2">
+                                                <input className="form-control" type="email" placeholder="Email " />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-12">
+                                            <div className="form-group mt-2">
+                                                <input className="form-control" type="text" placeholder="Phone" />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-12">
+                                            <div className="form-group mt-2">
+                                                <textarea className="form-control" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-12">
+                                            <button type="submit" className="btn btn-danger-gradiant mt-3 text-white border-0 px-3 py-2"><span> SUBMIT</span></button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div className="form-group">
-                                <textarea name="" id="" cols="15" rows="4" className="form-control" placeholder="Message"></textarea>
-                            </div>
-                            <div className="form-group">
-                                <input type="submit" value="Send Message" className="btn btn-primary py-3 px-5" />
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

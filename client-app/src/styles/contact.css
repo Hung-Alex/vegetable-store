@@ -1,129 +1,42 @@
-.contact-header{
-    margin: 0;
-    font-size: 56px;
-    font-weight: 600;
-    text-transform: capitalize;
-    color:#ffffff;
-}
-.contact-header-text{
-    margin-bottom: 10px;
-    font-size: 18px;
-    color:#ffffff;
-}
-.contact-background{
-    background: #011520;
-    min-height: 100vh;
-}
-.contact-bg{
-    background: #011520;
+@import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500);
+.contact3 {
+  font-family: "Montserrat", sans-serif;
+  color: #8d97ad;
+  font-weight: 300;
 }
 
-.container{
-    background: #ffffff;
-    box-shadow: 0 2px 15px 0 rgba(0,0,0,.15);
-    width: 1300px;
-    margin: 0 auto;
-    position: relative;
-    contain: layout;
-}
-.contact-text{
-    padding-left:200px;
-}
-    
-.form-control {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
-}
-@media screen and (prefers-reduced-motion:reduce) {
-    .form-control {
-        transition: none
-    }
+.contact3 h1,
+.contact3 h2,
+.contact3 h3,
+.contact3 h4,
+.contact3 h5,
+.contact3 h6 {
+  color: #3e4555;
 }
 
-.form-control::-ms-expand {
-    background-color: transparent;
-    border: 0
+.contact3 .font-weight-medium {
+  font-weight: 500;
 }
 
-.form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #80bdff;
-    outline: 0;
-    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+.contact3 .card-shadow {
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
 }
 
-.form-control::-webkit-input-placeholder {
-    color: #6c757d;
-    opacity: 1
+.contact3 .btn-danger-gradiant {
+  background: #ff4d7e;
+  background: -webkit-linear-gradient(legacy-direction(to right), #ff4d7e 0%, #ff6a5b 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#ff4d7e), to(#ff6a5b));
+  background: -webkit-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+  background: -o-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+  background: linear-gradient(to right, #ff4d7e 0%, #ff6a5b 100%);
 }
 
-.form-control::-moz-placeholder {
-    color: #6c757d;
-    opacity: 1
+.contact3 .btn-danger-gradiant:hover {
+  background: #ff6a5b;
+  background: -webkit-linear-gradient(legacy-direction(to right), #ff6a5b 0%, #ff4d7e 100%);
+  background: -webkit-gradient(linear, left top, right top, from(#ff6a5b), to(#ff4d7e));
+  background: -webkit-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+  background: -o-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+  background: linear-gradient(to right, #ff6a5b 0%, #ff4d7e 100%);
 }
-
-.form-control:-ms-input-placeholder {
-    color: #6c757d;
-    opacity: 1
-}
-
-.form-control::-ms-input-placeholder {
-    color: #6c757d;
-    opacity: 1
-}
-
-.form-control::placeholder {
-    color: #6c757d;
-    opacity: 1
-}
-
-.form-control:disabled,
-.form-control[readonly] {
-    background-color: #e9ecef;
-    opacity: 1
-}
-
-select.form-control:not([size]):not([multiple]) {
-    height: calc(2.25rem + 2px)
-}
-
-.form-group {
-    margin-bottom: 1rem
-}
-
-
-select.form-control:focus::-ms-value {
-    color: #495057;
-    background-color: #fff
-}
-
-.form-control-file,
-.form-control-range {
-    display: block;
-    width: 100%
-}
-
-@media (min-width:576px) {
-    .form-inline .form-group {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex: 0 0 auto;
-        flex: 0 0 auto;
-        -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
-        -ms-flex-align: center;
-        align-items: center;
-        margin-bottom: 0
-    }
-}
-
