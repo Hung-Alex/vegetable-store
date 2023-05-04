@@ -26,6 +26,8 @@ const authuSlice = createSlice({
             state.login.isFetching = false;
             state.login.currentUser = action.payload;
             state.login.error = false;
+            localStorage.setItem('token', action.payload.result.token)
+            
         },
         loginFail: (state) => {
             state.login.isFetching = false;

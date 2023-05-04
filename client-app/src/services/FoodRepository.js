@@ -27,8 +27,8 @@ export function getCategories(formData) {
 
 export async function addOrUpdateFood(formData,token, navigate) {
     try {
-      const formData = new FormData();
-     
+      
+    
       fetch("https://localhost:7027/api/Foods/", {
         method: "POST",
         headers: {
@@ -41,11 +41,15 @@ export async function addOrUpdateFood(formData,token, navigate) {
             throw new Error("Network response was not ok");
           }
           console.log("add to food  successful!");
+          return true;
         })
         .catch((error) => {
           console.error("Error occurred during add to food :", error);
+          return false;
         });
   
       
-    } catch (error) {}
+    } catch (error) {
+      return false;
+    }
   }

@@ -6,6 +6,7 @@ import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { isEmptyOrSpaces } from "../../utils/Utils";
 import { addOrUpdateFood, getFoodById, getCategories } from "../../services/FoodRepository";
 import { useSelector } from "react-redux";
+import config from "../../config";
 
 const EditProduct = () => {
     const initialState = {
@@ -24,15 +25,20 @@ const EditProduct = () => {
     const navigate=useNavigate();
     let { id } = useParams();
     id = id ?? 0;
-    const user =useSelector((state)=>state.auth.login.currentUser);
-    const token=user?.result.token;
+
+    const baseUrl=config.i18n.baseUrl.ApiUrl;
+    const token=localStorage.getItem('token')
+    
+
+    localStorage.getItem('token')
     useEffect(() => {
         document.title = 'Add or update food';
 
         getFoodById(id).then(data => {
             if (data)
                 setFood({
-                    ...data
+                    ...data,                   
+
                 });
             else
                 setFood(initialState);
@@ -47,7 +53,28 @@ const EditProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let form = new FormData(e.target);
+
+        let form = new FormData();
+        form.append("id",String(food.id));
+        form.append("name",String(food.name));
+
+        form.append("description",String(food.description));
+
+        form.append("weight",String(food.weight));
+
+        form.append("unit",String(food.unit));
+
+        form.append("imageFile",food.imageFile);
+        form.append("categoriesId",String(food.categoriesId));
+        form.append("price",String(food.price));
+        form.append("showOnPage",String(food.showOnPage));
+
+
+
+
+
+        
+
         addOrUpdateFood(form,token,navigate).then(data => {
             if (data)
                 alert('Save food success!');
@@ -165,24 +192,24 @@ const EditProduct = () => {
                                 name="categoryId"
                                 title="categoryId"
                                 required
-                                value={food.categories.id}
+                                value={food.categoriesId}
                                 onChange={e => setFood({
                                     ...food,
-                                    categories: e.target.value
+                                    categoriesId: e.target.value
                                 })}
                             >
                                 <option value=''>-- Choose Category --</option>
                                 {categories.length > 0 && categories.map((item, index) =>
-                                    <option key={index} value={item.value}>{item.name}</option>)}
+                                    <option key={index} value={item.id}>{item.name}</option>)}
                             </Form.Select>
                         </div>
                     </div>
-                    {!isEmptyOrSpaces(food.image) && <div className="row mb-3">
+                    {!isEmptyOrSpaces(food.imageFile) && <div className="row mb-3">
                         <Form.Label className="col-sm-2 col-form-label">
                             Picture present
                         </Form.Label>
                         <div className="col-sm-10">
-                            <img src={food.image} alt={food.name} />
+                            <img src={baseUrl+food.image} alt={food.name} />
                         </div>
                     </div>}
                     <div className="row mb-3" style={{ marginBottom: "30px" }}>
