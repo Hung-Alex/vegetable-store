@@ -14,11 +14,15 @@ export const loginUser = async (user, dispatch, navigate) => {
       return;
     }
     dispatch(loginSuccess(res.data));
+   
     navigate("/");
   } catch (error) {
     dispatch(loginFail());
   }
 };
+
+
+
 export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
   try {
