@@ -11,7 +11,8 @@ const ProductManagement = () => {
     const [isVisibleLoading, setIsVisibleLoading] = useState(true);
 
     const baseUrl = config.i18n.baseUrl.ApiUrl;
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
+
     // console.log(foodList);
     let p = 1, ps = 10;
 
@@ -28,13 +29,14 @@ const ProductManagement = () => {
     }, []);
 
     const handleDelete = (item) => {
-        let form = new FormData();
 
-        deleteFood(form, token).then(() => {
-            let newFoodList = foodList.filter((el) => el.id !== item.id);
-            setFoodList(newFoodList);
-        })
-        // setFoodList(newFoodList);
+        const checkItem = deleteFood(item.id, token);
+        if (checkItem) {
+            alert("Delete product success!");
+        }
+        else {
+            alert("Delete product fail!");
+        }
     }
 
     return (

@@ -52,14 +52,13 @@ export async function addOrUpdateFood(formData, token, navigate) {
   }
 }
 
-export async function deleteFood(formData, token) {
+export async function deleteFood(id, token) {
   try {
-    fetch("https://localhost:7027/api/Foods/", {
-      method: "POST",
+    fetch(`https://localhost:7027/api/Foods/${id}`, {
+      method: "DELETE",
       headers: {
         Authorization: token,
-      },
-      body: formData,
+      }
     })
       .then((response) => {
         if (!response.ok) {

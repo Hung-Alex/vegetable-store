@@ -26,7 +26,7 @@ const Category = () => {
         {categories.length > 0 && categories.map((item, index) => {
           return (
             <ListGroup.Item key={index}>
-              <Link to={`/product`}
+              <Link to={`/product?category=${item.urlSlug}`}
                 title={item.name}
                 key={index}>
                 {item.name}
