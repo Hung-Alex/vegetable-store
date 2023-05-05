@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetCategory } from "../Service/Category";
 import { Link } from "react-router-dom";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
@@ -18,15 +19,23 @@ const Category = () => {
 
   return (
     <>
-      {categories.length > 0 && categories.map((item, index) =>
-        <div className="p-3" key={index} style={{ padding: "16px 12px", borderLeft: "0.5px solid black", fontSize: "20px" }}>
-          <ul>
-            <li>
-              <Link to="/product">{item.name}</Link>
-            </li>
-          </ul>
-        </div>
-      )}
+      <div className="mb-4">
+        <h3 className="text-success mb-2">
+          Some Category
+        </h3>
+        {categories.length > 0 && categories.map((item, index) => {
+          return (
+            <ListGroup.Item key={index}>
+              <Link to={`/product?category=${item.urlSlug}`}
+                title={item.name}
+                key={index}>
+                {item.name}
+                {/* <span>&nbsp;({item.postCount})</span> */}
+              </Link>
+            </ListGroup.Item>
+          )
+        })}
+      </div>
 
     </>
   )

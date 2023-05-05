@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Filter from "./Filter";
 import Category from "./Category";
 import Product from "./Product";
-import { useEffect } from "react";
-import { useState } from "react";
 import { getFoods } from "../Service/FoodService";
 import { GetCategory } from "../Service/Category";
+import { useLocation } from "react-router-dom";
 
 const ListProduct = () => {
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
   const [pagingdata, setPagingdata] = useState({});
 
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery(),
+    cate = query.get('category') ?? '';
+
   useEffect(() => {
-    getFoods().then((data) => {
+    getFoods('', '', cate, 10, 1, '', '').then((data) => {
       if (data) {
         setProducts(data.items);
       } else {
@@ -27,7 +33,7 @@ const ListProduct = () => {
         setCategory([]);
       }
     });
-  }, []);
+  }, cate);
   return (
     <div className="container-fluid">
       <div className="row no-gutters">

@@ -22,13 +22,13 @@ const EditProduct = () => {
     },
         [food, setFood] = useState(initialState),
         [categories, setCategories] = useState([]);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     let { id } = useParams();
     id = id ?? 0;
 
-    const baseUrl=config.i18n.baseUrl.ApiUrl;
-    const token=localStorage.getItem('token')
-    
+    const baseUrl = config.i18n.baseUrl.ApiUrl;
+    const token = localStorage.getItem('token')
+
 
     localStorage.getItem('token')
     useEffect(() => {
@@ -37,8 +37,7 @@ const EditProduct = () => {
         getFoodById(id).then(data => {
             if (data)
                 setFood({
-                    ...data,                   
-
+                    ...data,
                 });
             else
                 setFood(initialState);
@@ -55,32 +54,29 @@ const EditProduct = () => {
         e.preventDefault();
 
         let form = new FormData();
-        form.append("id",String(food.id));
-        form.append("name",String(food.name));
+        form.append("id", String(food.id));
+        form.append("name", String(food.name));
 
-        form.append("description",String(food.description));
+        form.append("description", String(food.description));
 
-        form.append("weight",String(food.weight));
+        form.append("weight", String(food.weight));
 
-        form.append("unit",String(food.unit));
+        form.append("unit", String(food.unit));
 
-        form.append("imageFile",food.imageFile);
-        form.append("categoriesId",String(food.categoriesId));
-        form.append("price",String(food.price));
-        form.append("showOnPage",String(food.showOnPage));
+        form.append("imageFile", food.image);
+        form.append("categoriesId", String(food.categoriesId));
+        form.append("price", String(food.price));
+        form.append("showOnPage", String(food.showOnPage));
 
+        const checkData = addOrUpdateFood(form, token, navigate);
+        if (checkData) {
+            alert("Success!");
+            navigate("/admin/product");
+        }
+        else {
+            alert("Error");
+        }
 
-
-
-
-        
-
-        addOrUpdateFood(form,token,navigate).then(data => {
-            if (data)
-                alert('Save food success!');
-            else
-                alert('Error!!!');
-        });
     }
 
     if (id && !isInteger(id))
@@ -204,12 +200,12 @@ const EditProduct = () => {
                             </Form.Select>
                         </div>
                     </div>
-                    {!isEmptyOrSpaces(food.imageFile) && <div className="row mb-3">
+                    {!isEmptyOrSpaces(food.image) && <div className="row mb-3">
                         <Form.Label className="col-sm-2 col-form-label">
                             Picture present
                         </Form.Label>
                         <div className="col-sm-10">
-                            <img src={baseUrl+food.image} alt={food.name} />
+                            <img src={baseUrl + food.image} alt={food.name} />
                         </div>
                     </div>}
                     <div className="row mb-3" style={{ marginBottom: "30px" }}>
@@ -219,7 +215,7 @@ const EditProduct = () => {
                         <div className="col-sm-10">
                             <Form.Control
                                 type="file"
-                                name="imageFile"
+                                name="image"
                                 accept="image/*"
                                 title="Image file"
                                 onChange={e => setFood({

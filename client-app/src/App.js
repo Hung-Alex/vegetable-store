@@ -19,6 +19,7 @@ import Signin from './components/Signin';
 import Signup from './components/Signup';
 import Filter from './components/Filter';
 import ListProduct from './components/ListProduct';
+import DeTailProduct from './components/DetailsProduct';
 
 
 function App() {
@@ -30,10 +31,10 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path='/help' element={<Help />} />
           <Route path='/product' element={<ListProduct />} />
+          <Route path='/product/detail/:id' element={<DeTailProduct />} />
           <Route path='/about' element={<About />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-
         </Route>
         <Route path='/admin' element={<AdminLayout />}>
           <Route path='/admin' element={<Dashboard />} />
