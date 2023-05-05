@@ -38,7 +38,6 @@ const EditProduct = () => {
             if (data)
                 setFood({
                     ...data,
-
                 });
             else
                 setFood(initialState);
