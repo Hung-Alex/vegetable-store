@@ -89,10 +89,7 @@ namespace WebApi.Endpoints
 
             var slug = model.Name.GenerateSlug();
 
-            if (await foodRepository.IsSlugFoodExisted(0, slug))
-            {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
-            }
+           
             var food = model.Id > 0 ? await foodRepository.GetFoodById(model.Id) : null;
             if (food == null)
             {

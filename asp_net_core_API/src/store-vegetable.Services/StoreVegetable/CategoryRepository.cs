@@ -55,9 +55,36 @@ namespace store_vegetable.Services.StoreVegetable
                 
         }
 
+        
+
         public async Task<Categories> GetCategoryById(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Set<Categories>().FindAsync(id,cancellationToken);
+        }
+
+        public async Task<IPagedList<T>> GetCategorysByQuery<T>(CategoryQuery categoryQuery, IPagingParams pagingParams, Func<IQueryable<Categories>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> result = mapper(FilterCategory(categoryQuery));
+
+            return await result.ToPagedListAsync(pagingParams, cancellationToken);
+        }
+
+        private IQueryable<Categories> FilterCategory(CategoryQuery categoryQuery)
+        {
+            IQueryable<Categories> categorys = _context
+                .Set<Categories>();
+                
+
+            if (!String.IsNullOrWhiteSpace(categoryQuery.UrlSlug))
+            {
+                categorys = categorys.Where(x => x.UrlSlug == categoryQuery.UrlSlug);
+            }
+            if (!String.IsNullOrWhiteSpace(categoryQuery.Name))
+            {
+                categorys = categorys.Where(x => x.Name.Contains(categoryQuery.Name));
+            }
+           
+            return categorys;
         }
 
         public async Task<IPagedList<T>> GetFoodsByCategorySlug<T>(FoodQuery foodQuery, IPagingParams pagingParams, Func<IQueryable<Food>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)

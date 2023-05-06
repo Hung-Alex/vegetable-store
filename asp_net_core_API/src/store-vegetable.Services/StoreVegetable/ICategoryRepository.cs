@@ -18,6 +18,7 @@ namespace store_vegetable.Services.StoreVegetable
         Task<bool> DeleteCategory(int categoryId, CancellationToken cancellationToken = default);
         Task<bool> AddOrUpdateCategory(Categories category,CancellationToken cancellationToken=default);
         Task<Categories> GetCategoryById(int id, CancellationToken cancellationToken = default);
+        Task<IPagedList<T>> GetCategorysByQuery<T>(CategoryQuery categoryQuery , IPagingParams pagingParams, Func<IQueryable<Categories>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
 
     }
 }

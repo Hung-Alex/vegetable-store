@@ -16,6 +16,7 @@ namespace WebApi.Mapsters
 
             config.NewConfig<FoodDto, Food>();
             config.NewConfig<FoodQuery,FoodFilterModel>();
+            config.NewConfig<CategoryQuery, CategoryFilter>();
 
             config.NewConfig<FoodEditModel, Food>();
 

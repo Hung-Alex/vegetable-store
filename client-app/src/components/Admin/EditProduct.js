@@ -18,7 +18,6 @@ const EditProduct = () => {
         description: '',
         price: 0,
         categories: {},
-        categoriesId: 0,
         showOnPage: false
     },
         [food, setFood] = useState(initialState),
@@ -26,6 +25,7 @@ const EditProduct = () => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = id ?? 0;
+    const [categoryId,setCategoryId]=useState(0);
 
     const baseUrl = config.i18n.baseUrl.ApiUrl;
     const token = localStorage.getItem('token');
@@ -35,9 +35,14 @@ const EditProduct = () => {
 
         getFoodById(id).then(data => {
             if (data)
+            {
                 setFood({
                     ...data,
                 });
+              
+                
+               
+            }
             else
                 setFood(initialState);
         });
@@ -51,7 +56,7 @@ const EditProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        setCategoryId(food.categories.id);
         let form = new FormData();
         form.append("id", String(food.id));
         form.append("name", String(food.name));
@@ -59,7 +64,7 @@ const EditProduct = () => {
         form.append("weight", String(food.weight));
         form.append("unit", String(food.unit));
         form.append("imageFile", food.image);
-        form.append("categoriesId", String(food.categoriesId));
+        form.append("categoriesId", String(categoryId));
         form.append("price", String(food.price));
         form.append("showOnPage", String(food.showOnPage));
 
@@ -189,10 +194,8 @@ const EditProduct = () => {
                                 name="categoryId"
                                 title="categoryId"
                                 required
-                                onChange={e => setFood({
-                                    ...food,
-                                    categoriesId: e.target.value
-                                })}
+                                Value={food.categories.id||''}
+                                onChange={e => setCategoryId(Number(e.target.value))}
                             >
                                 <option value="" >-- Choose Category --</option>
                                 {categories.length > 0 && categories.map((item, index) =>

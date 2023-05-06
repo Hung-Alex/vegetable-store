@@ -27,6 +27,11 @@ namespace WebApi.Endpoints
             routeGroupBuilder.MapGet("/", GetCategories)
                             .WithName("GetCategories")
                             .Produces<ApiResponse<CategoryDto>>() ;
+
+            routeGroupBuilder.MapGet("/Query", GetCategorysByQuery)
+                            .WithName("GetCategorysByQuery")
+                             .Produces<ApiResponse<PaginationResult<FoodDto>>>();
+
             routeGroupBuilder.MapGet("/{slug::regex(^[a-z0-9_-]+$)}/foods", GetFoodsByCategorySlug)
                            .WithName("GetFoodsByCategorySlug")
                            .Produces<ApiResponse<PaginationResult<FoodDto>>>();
@@ -52,6 +57,18 @@ namespace WebApi.Endpoints
             return app;
         }
 
+        private async static Task<IResult> GetCategorysByQuery([AsParameters] CategoryFilter model, [AsParameters] PagingModel paging, HttpContext context, ICategoryRepository categoryRepository, IMapper mapper)
+        {
+
+            var categoryQuery = mapper.Map<CategoryQuery>(model);
+            var categories = await categoryRepository.GetCategorysByQuery(categoryQuery, paging, categorys => categorys.ProjectToType<CategoryDto>());
+
+            var paginationResult = new PaginationResult<CategoryDto>(categories);
+
+
+            return Results.Ok(ApiResponse.Success(paginationResult));
+
+        }
         private static async Task<IResult> GetCategories([FromServices] ICategoryRepository categoryRepository,IMapper mapper,HttpContext context)
         {
             var categories = await categoryRepository.GetAllCategories();
