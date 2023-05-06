@@ -20,7 +20,9 @@ import Signup from './components/Signup';
 import Filter from './components/Filter';
 import ListProduct from './components/ListProduct';
 import DeTailProduct from './components/DetailsProduct';
-
+import UserManagement from './components/Admin/UserManagement';
+import EditUser from './components/Admin/EditUser';
+import AddProduct from './components/Admin/AddProduct';
 
 function App() {
   return (
@@ -41,6 +43,10 @@ function App() {
           <Route path='/admin/product' element={<ProductManagement />} />
           <Route path='/admin/product/edit' element={<EditProduct />} />
           <Route path='/admin/product/edit/:id' element={<EditProduct />} />
+          <Route path='/admin/product/add' element={<AddProduct />} />
+          <Route path='/admin/user' element={<UserManagement />} />
+          <Route path='/admin/user/edit' element={<EditUser />} />
+          <Route path='/admin/user/edit/:id' element={<EditUser />} />
         </Route>
       </Routes>
       <Routes>

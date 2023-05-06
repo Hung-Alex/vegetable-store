@@ -37,6 +37,12 @@ export async function addOrUpdateFood(formData, token, navigate) {
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
+          const data = response.json();
+          if (data.isSuccess) {
+            return true;
+          } else {
+            return false;
+          }
         }
         console.log("add to food successful!");
         return true;
@@ -45,8 +51,6 @@ export async function addOrUpdateFood(formData, token, navigate) {
         console.error("Error occurred during add to food :", error);
         return false;
       });
-
-
   } catch (error) {
     return false;
   }
