@@ -86,19 +86,27 @@ namespace WebApi.Endpoints
             {
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, validationResult));
             }
-
             var slug = model.Name.GenerateSlug();
-            
-            if (await categoryRepository.IsCategorySlugExistedAsync(0,slug))
-            {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
-            }
+
             var category = model.Id > 0 ? await categoryRepository.GetCategoryById(model.Id) : null;
             if (category == null)
             {
                 category = mapper.Map<Categories>(model);
-                
+                if (await categoryRepository.IsCategorySlugExistedAsync(0, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
+                }
+
             }
+            if(model.Id>0)
+            {
+                if (await categoryRepository.IsCategorySlugExistedAsync(model.Id, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
+                }
+            }
+
+            
             category.UrlSlug = slug;
             category.Name = model.Name;
             category.Description = model.Description;

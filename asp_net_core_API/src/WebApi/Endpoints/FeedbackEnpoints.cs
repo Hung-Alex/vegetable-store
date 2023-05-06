@@ -131,16 +131,24 @@ namespace WebApi.Endpoints
 
             var slug = model.Title.GenerateSlug();
 
-            if (await feedbackRepository.IsFeedbackSlugExistedAsync(0, slug))
-            {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho feedback khác"));
-            }
             var feedback = model.Id > 0 ? await feedbackRepository.GetFeedbackById(model.Id) : null;
             if (feedback == null)
             {
                 feedback = mapper.Map<Feedback>(model);
 
+                if (await feedbackRepository.IsFeedbackSlugExistedAsync(0, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho feedback khác"));
+                }
             }
+            if(model.Id>0)
+            {
+                if (await feedbackRepository.IsFeedbackSlugExistedAsync(model.Id, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho feedback khác"));
+                }
+            }
+           
             feedback.UrlSlug = slug;
             feedback.Title = model.Title;
             feedback.Description = model.Description;

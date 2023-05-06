@@ -97,7 +97,18 @@ namespace WebApi.Endpoints
             if (food == null)
             {
                 food = mapper.Map<Food>(model);
+                if (await foodRepository.IsSlugFoodExisted(0, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
+                }
 
+            }
+            if(model.Id>0)
+            {
+                if (await foodRepository.IsSlugFoodExisted(model.Id, slug))
+                {
+                    return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug '{slug}' đã được sử dụng cho chủ đề khác"));
+                }
             }
             food.UrlSlug = slug;
             food.Name = model.Name;
