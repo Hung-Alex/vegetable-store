@@ -1,88 +1,73 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/Admin/product.css";
-import { deleteFood, getFoods } from "../../services/FoodRepository";
+//import "../../styles/Admin/product.css";
+import { getUsers } from "../../services/UserRepository";
 import Table from "react-bootstrap/Table";
 import { NavLink } from "react-router-dom";
 import config from "../../config";
-import { Button } from "react-bootstrap";
 
-
-const ProductManagement = () => {
-    const [foodList, setFoodList] = useState([]);
-    const [isVisibleLoading, setIsVisibleLoading] = useState(true);
-
+const UserManagement = () => {
+    const [userList, setUserList] = useState([]);
+    console.log(userList);
     const baseUrl = config.i18n.baseUrl.ApiUrl;
     const token = localStorage.getItem('token');
 
-    // console.log(foodList);
     let p = 1, ps = 10;
 
     useEffect(() => {
-        document.title = "Food list";
+        document.title = "User list";
 
-        getFoods(ps, p).then(data => {
+        getUsers(token, ps, p).then(data => {
             if (data)
-                setFoodList(data.items);
+                setUserList(data.items);
             else
-                setFoodList([]);
-            // setIsVisibleLoading(false);
-        }, [p, ps]);
-
-    }, []);
+                setUserList([]);
+        }, [token, p, ps]);
+        console.log(userList.length)
+    }, [token, p, ps]);
 
     const handleDelete = (item) => {
 
-        const checkItem = deleteFood(item.id, token);
-        if (checkItem) {
-            alert("Delete product success!");
-        }
-        else {
-            alert("Delete product fail!");
-        }
+        // const checkItem = deleteUser(item.id, token);
+        // if (checkItem) {
+        //     alert("Delete product success!");
+        // }
+        // else {
+        //     alert("Delete product fail!");
+        // }
     }
 
     return (
         <div className="head-title">
-            <div className="head-container" style={{ display: "flex", justifyContent: "space-between" }}>
-                <h1>Product Management</h1>
-                <NavLink to={"/admin/product/add"}>
-                    <Button className="btn btn-primary" style={{ height: "38px", alignSelf: "end", margin: "0 40px 20px 0" }}>Add new</Button>
-                </NavLink>
-            </div>
-
+            <h1>User Management</h1>
             <div className="product-management-container">
                 <Table striped responsive bordered>
                     <thead>
                         <tr>
                             <th>STT</th>
                             <th>Name</th>
-                            <th>Weight</th>
-                            <th>Unit</th>
-                            <th>Price</th>
-                            <th>Category</th>
+                            <th>Password</th>
+                            <th>Role</th>
                             <th>Operation</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {foodList.length > 0 ? foodList.map((item, index) =>
+                        {userList.length > 0 ? userList.map((item, index) =>
 
                             <tr key={index}>
                                 <td>
                                     {index + 1}
                                 </td>
                                 <td>
-                                    <NavLink to={`/admin/product/edit/${item.id}`} className="text-blod">
+                                    <NavLink to={`/admin/user/edit/${item.id}`} className="text-blod">
                                         {item.name}
                                     </NavLink>
                                     <p className="text-muted">{item.description}</p>
                                 </td>
-                                <td>{item.weight}</td>
-                                <td>{item.unit}</td>
-                                <td>{item.price}</td>
-                                <td>{item.categories.name}</td>
+                                <td>{item.password}</td>
+                                <td>{item.role}</td>
                                 <td style={{ fontSize: "24px" }}>
-                                    <NavLink to={`/admin/product/edit/${item.id}`}>
+                                    <NavLink to={`/admin/user/edit/${item.id}`}>
                                         <i className="bx bx-edit"></i>
                                     </NavLink>
                                     <i className="bx bx-trash" onClick={() => handleDelete(item)}></i>
@@ -92,7 +77,7 @@ const ProductManagement = () => {
                             <tr>
                                 <td colSpan={4}>
                                     <h4 className="text-danger text-center">
-                                        Food is not found.
+                                        User is not found.
                                     </h4>
                                 </td>
                             </tr>
@@ -104,4 +89,4 @@ const ProductManagement = () => {
     )
 }
 
-export default ProductManagement;
+export default UserManagement;

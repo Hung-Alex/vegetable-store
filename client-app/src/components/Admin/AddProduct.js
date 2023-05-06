@@ -8,7 +8,7 @@ import { addOrUpdateFood, getFoodById, getCategories } from "../../services/Food
 import { useSelector } from "react-redux";
 import config from "../../config";
 
-const EditProduct = () => {
+const AddProduct = () => {
     const initialState = {
         id: 0,
         name: '',
@@ -17,30 +17,22 @@ const EditProduct = () => {
         image: '',
         description: '',
         price: 0,
-        categories: {},
+
         categoriesId: 0,
         showOnPage: false
     },
         [food, setFood] = useState(initialState),
         [categories, setCategories] = useState([]);
     const navigate = useNavigate();
-    let { id } = useParams();
-    id = id ?? 0;
+
 
     const baseUrl = config.i18n.baseUrl.ApiUrl;
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        document.title = 'Add or update food';
+        document.title = 'Add  food';
 
-        getFoodById(id).then(data => {
-            if (data)
-                setFood({
-                    ...data,
-                });
-            else
-                setFood(initialState);
-        });
+
         getCategories().then(data => {
             if (data)
                 setCategories(data);
@@ -48,7 +40,16 @@ const EditProduct = () => {
                 setCategories([]);
         });
     }, []);
-
+    const [image, setImage] = useState(null)
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            setImage(URL.createObjectURL(event.target.files[0]));
+        }
+        setFood({
+            ...food,
+            image: event.target.files[0]
+        })
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -68,22 +69,12 @@ const EditProduct = () => {
                 alert("Success!");
                 navigate("/admin/product");
             } else {
-                alert("You cannot edit permission");
+                alert("You cannot addd permission");
             }
         });
-        // if (checkData) {
-        //     alert("Success!");
-        //     navigate("/admin/product");
-        // }
-        // else {
-        //     alert("Error");
-        // }
+
     }
 
-    if (id && !isInteger(id))
-        return (
-            <Navigate to={`/400?redirectTo=/admin/food`} />
-        )
     return (
         <>
             <div className="head-title" style={{ padding: "40px", overflowY: "scroll" }}>
@@ -173,10 +164,7 @@ const EditProduct = () => {
                                 title="price"
                                 required
                                 value={food.price || ''}
-                                onChange={e => setFood({
-                                    ...food,
-                                    price: e.target.value
-                                })}
+                                onChange={e => onImageChange(e)}
                             />
                         </div>
                     </div>
@@ -196,7 +184,7 @@ const EditProduct = () => {
                             >
                                 <option value="" >-- Choose Category --</option>
                                 {categories.length > 0 && categories.map((item, index) =>
-                                    <option key={index} value={item.id} selected={item.id == food.categories.id}  >{item.name}</option>)
+                                    <option key={index} value={item.id}  >{item.name}</option>)
                                 }
                             </Form.Select>
                         </div>
@@ -206,7 +194,7 @@ const EditProduct = () => {
                             Picture present
                         </Form.Label>
                         <div className="col-sm-10">
-                            <img src={baseUrl + food.image} alt={food.name} />
+                            <img src={food.image} alt={food.name} />
                         </div>
                     </div>}
                     <div className="row mb-3" style={{ marginBottom: "30px" }}>
@@ -259,4 +247,4 @@ const EditProduct = () => {
     )
 }
 
-export default EditProduct;
+export default AddProduct;
