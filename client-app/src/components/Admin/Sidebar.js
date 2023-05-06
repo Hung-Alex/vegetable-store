@@ -23,6 +23,12 @@ const Sidebar = () => {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink to="/admin/category">
+                        <i className='bx bxs-book' ></i>
+                        <span className="sidebar-text">Category Management</span>
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to="/admin/user">
                         <i className='bx bxs-user' ></i>
                         <span className="sidebar-text">User Management</span>

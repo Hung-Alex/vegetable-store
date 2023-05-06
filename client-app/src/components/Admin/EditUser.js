@@ -38,7 +38,7 @@ const EditUser = () => {
         e.preventDefault();
 
         let form = new FormData();
-
+        form.append("id", String(user.id));
         form.append("name", String(user.name));
         form.append("password", String(user.password));
         form.append("role", String(user.role));
@@ -46,13 +46,11 @@ const EditUser = () => {
         updateUser(id, form, token, navigate).then(data => {
             if (data === true) {
                 alert("Success!");
-                navigate("/admin/product");
+                navigate("/admin/user");
             } else {
                 alert("You cannot edit permission");
             }
-        }
-        )
-
+        })
     }
 
     if (id && !isInteger(id))

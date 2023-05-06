@@ -25,7 +25,7 @@ const EditProduct = () => {
     const navigate = useNavigate();
     let { id } = useParams();
     id = id ?? 0;
-    const [categoryId,setCategoryId]=useState(0);
+    const [categoryId, setCategoryId] = useState(0);
 
     const baseUrl = config.i18n.baseUrl.ApiUrl;
     const token = localStorage.getItem('token');
@@ -34,14 +34,13 @@ const EditProduct = () => {
         document.title = 'Add or update food';
 
         getFoodById(id).then(data => {
-            if (data)
-            {
+            if (data) {
                 setFood({
                     ...data,
                 });
-              
-                
-               
+
+
+
             }
             else
                 setFood(initialState);
@@ -194,7 +193,7 @@ const EditProduct = () => {
                                 name="categoryId"
                                 title="categoryId"
                                 required
-                                Value={food.categories.id||''}
+
                                 onChange={e => setCategoryId(Number(e.target.value))}
                             >
                                 <option value="" >-- Choose Category --</option>

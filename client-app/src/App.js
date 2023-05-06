@@ -23,6 +23,8 @@ import DeTailProduct from './components/DetailsProduct';
 import UserManagement from './components/Admin/UserManagement';
 import EditUser from './components/Admin/EditUser';
 import AddProduct from './components/Admin/AddProduct';
+import CategoryManagement from './components/Admin/CategoryManagement';
+import EditCategory from './components/Admin/EditCategory';
 
 function App() {
   return (
@@ -44,6 +46,9 @@ function App() {
           <Route path='/admin/product/edit' element={<EditProduct />} />
           <Route path='/admin/product/edit/:id' element={<EditProduct />} />
           <Route path='/admin/product/add' element={<AddProduct />} />
+          <Route path='/admin/category' element={<CategoryManagement />} />
+          <Route path='/admin/category/edit' element={<EditCategory />} />
+          <Route path='/admin/category/edit/:id' element={<EditCategory />} />
           <Route path='/admin/user' element={<UserManagement />} />
           <Route path='/admin/user/edit' element={<EditUser />} />
           <Route path='/admin/user/edit/:id' element={<EditUser />} />
