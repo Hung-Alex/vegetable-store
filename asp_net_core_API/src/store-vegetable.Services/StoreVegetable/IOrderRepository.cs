@@ -16,6 +16,10 @@ namespace store_vegetable.Services.StoreVegetable
         Task<IPagedList<T>> GetPagedListOrder<T>(OrderQuery orderQuery, IPagingParams pagingParams,Func< IQueryable<Order>, IQueryable<T>> map, CancellationToken cancellationToken = default);
 
         Task<bool> SetOrderStatus(int idOrder, CancellationToken cancellationToken = default);
+
+        Task<bool> DeleteOrderById(int id,CancellationToken cancellationToken=default);
+        Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default);
+       
         
 
     }

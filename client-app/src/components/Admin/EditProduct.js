@@ -190,6 +190,9 @@ const EditProduct = () => {
                                 name="categoryId"
                                 title="categoryId"
                                 required
+
+                                value={food.categories.id}
+
                                 onChange={e => setCategoryId(Number(e.target.value))}
                             >
                                 <option value="" >-- Choose Category --</option>

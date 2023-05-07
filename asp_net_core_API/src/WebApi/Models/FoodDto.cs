@@ -12,6 +12,7 @@ namespace WebApi.Models
         public string Description { get; set; }// mô tả về sản phẩm
         public string UrlSlug { get; set; }//url slug
         public int Price { get; set; }//giá của sản phẩm
+        public bool ShowOnPage { get; set; }
         public CategoryDto Categories { get; set; }
        
     }
