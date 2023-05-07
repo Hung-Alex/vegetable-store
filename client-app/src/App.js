@@ -25,6 +25,8 @@ import EditUser from './components/Admin/EditUser';
 import AddProduct from './components/Admin/AddProduct';
 import CategoryManagement from './components/Admin/CategoryManagement';
 import EditCategory from './components/Admin/EditCategory';
+import FeedbackManagement from './components/Admin/FeedbackManagement';
+import EditFeedback from './components/Admin/EditFeedback';
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           <Route path='/help' element={<Help />} />
           <Route path='/product' element={<ListProduct />} />
           <Route path='/product/detail/:id' element={<DeTailProduct />} />
+          <Route path='/contact' element={<Contact />} />
           <Route path='/about' element={<About />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
@@ -52,6 +55,9 @@ function App() {
           <Route path='/admin/user' element={<UserManagement />} />
           <Route path='/admin/user/edit' element={<EditUser />} />
           <Route path='/admin/user/edit/:id' element={<EditUser />} />
+          <Route path='/admin/feedback' element={<FeedbackManagement />} />
+          <Route path='/admin/feedback/edit' element={<EditFeedback />} />
+          <Route path='/admin/feedback/edit/:id' element={<EditFeedback />} />
         </Route>
       </Routes>
       <Routes>
