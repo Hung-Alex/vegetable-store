@@ -30,7 +30,7 @@ namespace WebApi.Endpoints
 
             routeGroupBuilder.MapGet("/Query", GetCategorysByQuery)
                             .WithName("GetCategorysByQuery")
-                             .Produces<ApiResponse<PaginationResult<FoodDto>>>();
+                             .Produces<ApiResponse<PaginationResult<CategoryItem>>>();
 
             routeGroupBuilder.MapGet("/{slug::regex(^[a-z0-9_-]+$)}/foods", GetFoodsByCategorySlug)
                            .WithName("GetFoodsByCategorySlug")
@@ -61,9 +61,9 @@ namespace WebApi.Endpoints
         {
 
             var categoryQuery = mapper.Map<CategoryQuery>(model);
-            var categories = await categoryRepository.GetCategorysByQuery(categoryQuery, paging, categorys => categorys.ProjectToType<CategoryDto>());
+            var categories = await categoryRepository.GetCategorysByQuery(categoryQuery, paging, categorys => categorys.ProjectToType<CategoryItem>());
 
-            var paginationResult = new PaginationResult<CategoryDto>(categories);
+            var paginationResult = new PaginationResult<CategoryItem>(categories);
 
 
             return Results.Ok(ApiResponse.Success(paginationResult));

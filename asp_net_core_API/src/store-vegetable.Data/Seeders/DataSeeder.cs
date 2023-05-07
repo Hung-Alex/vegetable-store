@@ -356,36 +356,11 @@ namespace store_vegetable.Data.Seeders
         {
             var Users = new List<User>()
             {
-                new()
-                { 
-                    Name="daicakhu7",
-                    Password="hungprovip".EncodePasswordToBase64(),               
-                },
+                
                 new()
                 {
-                    Name="daicakhu8",
-                    Password="hungprovip".EncodePasswordToBase64(),
-                },new()
-                {
-                    Name="daicakhu9",
-                    Password="hungprovip".EncodePasswordToBase64(),
-                },new()
-                {
-                    Name="daicakhu10",
-                    Password="hungprovip".EncodePasswordToBase64(),
-                },new()
-                {
-                    Name="daicakhu11",
-                    Password="hungprovip".EncodePasswordToBase64(),
-                },new()
-                {
-                    Name="daicakhu12",
-                    Password="hungprovip".EncodePasswordToBase64(),
-                },
-                new()
-                {
-                    Name="Admin",
-                    Password="hungprovip".EncodePasswordToBase64(),
+                    Name="admin",
+                    Password="123456".EncodePasswordToBase64(),
                     Role="admin"
                 },
             }; 
@@ -393,10 +368,6 @@ namespace store_vegetable.Data.Seeders
             _dbContext.SaveChanges();
             return Users;
         }
-        private IList<Food> AddFoods()
-        {
-
-            throw new Exception();
-        }
+        
     }
 }
