@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Org.BouncyCastle.Asn1.Esf;
 using store_vegetable.Core.Contracts;
 using store_vegetable.Core.DTO;
 using store_vegetable.Core.Entites;
@@ -82,7 +83,15 @@ namespace store_vegetable.Services.StoreVegetable
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> DeleteOrderById(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Order>().Where(x => x.Id == id).ExecuteDeleteAsync() > 0;
+        }
 
-        
+        public async Task<Order> GetOrderById(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Order>().FindAsync(id);
+            
+        }
     }
 }
