@@ -16,7 +16,11 @@ const EditFeedback = () => {
         shippingDate: '',
         status: 0
     },
-        [feedback, setFeedback] = useState(initialState);
+        [feedback, setFeedback] = useState(initialState),
+        [subject, setSubject] = useState('');
+    const [body, setBody] = useState('');
+
+
     // console.log(feedback);
     const navigate = useNavigate();
     let { id } = useParams();
@@ -40,24 +44,30 @@ const EditFeedback = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        // if (!fileList) {
+        //     return;
+        // }
         let form = new FormData();
-        form.append("id", String(feedback.id));
-        form.append("title", String(feedback.title));
-        form.append("description", String(feedback.description));
-        form.append("email", String(feedback.email));
-        form.append("meta", String(feedback.meta));
-        form.append("shippingDate", String(feedback.shippingDate));
-        form.append("status", String(feedback.status));
 
-        // updateFeedback(id, form, token, navigate).then(data => {
-        //     if (data === true) {
-        //         alert("Success!");
-        //         navigate("/admin/feedback");
-        //     } else {
-        //         alert("You cannot edit permission");
-        //     }
-        // })
+        // form.append("description", String(feedback.description));
+        // form.append("email", String(feedback.email));
+        // form.append("meta", String(feedback.meta));
+        // form.append("shippingDate", String(feedback.shippingDate));
+        // form.append("status", String(feedback.status));
+        // form.append("Actachments", fileList);
+
+
+        // 
+
+
+        updateFeedback(id, form, token, navigate).then(data => {
+            if (data === true) {
+                alert("Success!");
+                navigate("/admin/feedback");
+            } else {
+                alert("You cannot edit permission");
+            }
+        })
         const check = updateFeedback(id, form, token, navigate);
         if (check) {
             alert("Success!");
@@ -66,6 +76,15 @@ const EditFeedback = () => {
             alert("Error");
         }
     }
+
+    // const [fileList, setFileList] = useState < FileList | null > (null);
+
+    // const handleFileChange = (e) => {
+    //     setFileList(e.target.files);
+    // };
+
+
+    // const files = fileList ? [...fileList] : [];
 
     if (id && !isInteger(id))
         return (
@@ -169,6 +188,55 @@ const EditFeedback = () => {
                         </div>
                     </div>
                     <div className="row mb-3" style={{ marginBottom: "30px" }}>
+                        <Form.Label className="col-sm-2 col-form-label">
+                            Subject
+                        </Form.Label>
+                        <div className="col-sm-10">
+                            <Form.Control
+                                as="textarea"
+                                type="text"
+                                name="Subject"
+                                title="Subject"
+                                required
+                                value=''
+                                onChange={e => setSubject(
+                                    e.target.value
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div className="row mb-3" style={{ marginBottom: "30px" }}>
+                        <Form.Label className="col-sm-2 col-form-label">
+                            Body
+                        </Form.Label>
+                        <div className="col-sm-10">
+                            <Form.Control
+                                as="textarea"
+                                type="text"
+                                name="body"
+                                title="body"
+                                required
+                                value=''
+                                onChange={e => setBody(
+                                    e.target.value
+                                )}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        {/* <input type="file" onChange={handleFileChange} multiple /> */}
+
+                        <ul>
+                            {/* {files.map((file, i) => (
+                                <li key={i}>
+                                    {file.name} - {file.type}
+                                </li>
+                            ))} */}
+                        </ul>
+
+
+                    </div>
+                    <div className="row mb-3" style={{ marginBottom: "30px" }}>
                         <div className="col-sm-10 offset-sm-2">
                             <div className="form-check">
                                 <input className="form-check-input"
@@ -186,7 +254,7 @@ const EditFeedback = () => {
                                 </Form.Label>
                             </div>
                         </div>
-                    </div>
+                    </div >
                     <div className="text-center">
                         <Button variant="primary" type="submit" style={{ marginRight: "20px" }}>
                             Save
@@ -195,8 +263,8 @@ const EditFeedback = () => {
                             Cancel and back
                         </Link>
                     </div>
-                </Form>
-            </div>
+                </Form >
+            </div >
         </>
     )
 }
