@@ -38,9 +38,6 @@ const EditProduct = () => {
                 setFood({
                     ...data,
                 });
-
-
-
             }
             else
                 setFood(initialState);
@@ -193,7 +190,6 @@ const EditProduct = () => {
                                 name="categoryId"
                                 title="categoryId"
                                 required
-
                                 onChange={e => setCategoryId(Number(e.target.value))}
                             >
                                 <option value="" >-- Choose Category --</option>

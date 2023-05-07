@@ -3,45 +3,45 @@ import Table from "react-bootstrap/Table";
 import { NavLink } from "react-router-dom";
 import config from "../../config";
 import { Button } from "react-bootstrap";
-import { getFeedbackList } from "../../services/FeedbackRepository";
 
 
-const FeedbackManagement = () => {
-    const [feedbackList, setFeedbackList] = useState([]);
+const FoodManagement = () => {
+    const [foodList, setFoodList] = useState([]);
 
     const baseUrl = config.i18n.baseUrl.ApiUrl;
     const token = localStorage.getItem('token');
 
-    // console.log(feedbackList);
+    let p = 1, ps = 10;
 
     useEffect(() => {
-        document.title = "Order list";
+        document.title = "Food list";
 
-        getFeedbackList(token).then(data => {
+        getFoods(ps, p).then(data => {
             if (data)
-                setFeedbackList(data);
+                setFoodList(data.items);
             else
-                setFeedbackList([]);
-        }, [token]);
+                setFoodList([]);
+            // setIsVisibleLoading(false);
+        }, [p, ps]);
 
     }, []);
 
     const handleDelete = (item) => {
 
-        // const checkItem = deleteFood(item.id, token);
-        // if (checkItem) {
-        //     alert("Delete product success!");
-        // }
-        // else {
-        //     alert("Delete product fail!");
-        // }
+        const checkItem = deleteFood(item.id, token);
+        if (checkItem) {
+            alert("Delete product success!");
+        }
+        else {
+            alert("Delete product fail!");
+        }
     }
 
     return (
         <div className="head-title">
             <div className="head-container" style={{ display: "flex", justifyContent: "space-between" }}>
-                <h1>Feedback Management</h1>
-                <NavLink to={"/admin/order/add"}>
+                <h1>Product Management</h1>
+                <NavLink to={"/admin/product/add"}>
                     <Button className="btn btn-primary" style={{ height: "38px", alignSelf: "end", margin: "0 40px 20px 0" }}>Add new</Button>
                 </NavLink>
             </div>
@@ -51,32 +51,34 @@ const FeedbackManagement = () => {
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Title</th>
-                            {/* <th>Description</th> */}
-                            <th>Email</th>
-                            <th>Meta</th>
-                            <th>Shipping date</th>
+                            <th>Name</th>
+                            <th>Weight</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Category</th>
                             <th>Operation</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {feedbackList.length > 0 ? feedbackList.map((item, index) =>
+                        {foodList.length > 0 ? foodList.map((item, index) =>
+
                             <tr key={index}>
                                 <td>
                                     {index + 1}
                                 </td>
                                 <td>
-                                    <NavLink to={`/admin/feedback/edit/${item.id}`} className="text-blod">
-                                        {item.title}
+                                    <NavLink to={`/admin/product/edit/${item.id}`} className="text-blod">
+                                        {item.name}
                                     </NavLink>
                                     <p className="text-muted">{item.description}</p>
                                 </td>
-                                <td>{item.email}</td>
-                                <td>{item.meta}</td>
-                                <td>{item.shippingDate}</td>
+                                <td>{item.weight}</td>
+                                <td>{item.unit}</td>
+                                <td>{item.price}</td>
+                                <td>{item.categories.name}</td>
                                 <td style={{ fontSize: "24px" }}>
-                                    <NavLink to={`/admin/feedback/edit/${item.id}`}>
+                                    <NavLink to={`/admin/product/edit/${item.id}`}>
                                         <i className="bx bx-edit"></i>
                                     </NavLink>
                                     <i className="bx bx-trash" onClick={() => handleDelete(item)}></i>
@@ -86,7 +88,7 @@ const FeedbackManagement = () => {
                             <tr>
                                 <td colSpan={4}>
                                     <h4 className="text-danger text-center">
-                                        Feedback is not found.
+                                        Food is not found.
                                     </h4>
                                 </td>
                             </tr>

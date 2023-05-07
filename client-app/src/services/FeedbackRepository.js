@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function getUsers(token, pageSize = 10, pageNumber = 1) {
+export async function getFeedbackList(token) {
     try {
-        const response = await axios.get(`https://localhost:7027/api/Users/?PageSize=${pageSize}&PageNumber=${pageNumber}`, {
+        const response = await axios.get(`https://localhost:7027/api/Feedbacks/all`, {
             headers: {
                 Authorization: token
             }
@@ -14,23 +14,22 @@ export async function getUsers(token, pageSize = 10, pageNumber = 1) {
         else {
             return null;
         }
-
     } catch (error) {
         console.log('Error', error.messge);
         return null;
     }
 }
 
-export async function getUserById(token, id = 0) {
+export async function getFeedbackById(token, id = 0) {
     if (id > 0) {
         try {
-            const response = await axios.get(`https://localhost:7027/api/Users/${id}`, {
+            const response = await axios.get(`https://localhost:7027/api/Feedbacks/${id}`, {
                 headers: {
                     Authorization: token
                 }
             });
             const data = response.data;
-            if (data.isSuccess === true) {
+            if (data.isSuccess) {
                 return data.result;
             }
             else {
@@ -46,9 +45,10 @@ export async function getUserById(token, id = 0) {
     }
 }
 
-export async function updateUser(id, formData, token, navigate) {
+
+export async function updateFeedback(id, formData, token, navigate) {
     try {
-        fetch(`https://localhost:7027/api/Users/${id}`, {
+        fetch(`https://localhost:7027/api/Feedbacks/${id}/feedback`, {
             method: "PUT",
             headers: {
                 Authorization: token,
@@ -58,22 +58,14 @@ export async function updateUser(id, formData, token, navigate) {
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
-                    const data = response.json();
-                    if (data.isSuccess) {
-                        return true;
-                    } else {
-                        return false;
-                    }
                 }
-                console.log("add to food successful!");
+                console.log("add to feedback successful!");
                 return true;
             })
             .catch((error) => {
-                console.error("Error occurred during add to food :", error);
+                console.error("Error occurred during add to feedback :", error);
                 return false;
             });
-
-
     } catch (error) {
         return false;
     }
